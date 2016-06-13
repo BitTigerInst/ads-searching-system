@@ -8,7 +8,7 @@ public class Ad {
     private double relevantScore;
     private double pClick;
     private double rankScore;
-    private double CPC;
+    private double costPerClick;
 
     public Ad() {
     }
@@ -69,11 +69,11 @@ public class Ad {
         this.rankScore = rankScore;
     }
 
-    public double getCPC() {
-        return CPC;
+    public double getCostPerClick() {
+        return costPerClick;
     }
 
-    public void setCPC(double CPC) {
-        this.CPC = CPC;
+    public void setCostPerClick(double costPerClick) {
+        this.costPerClick = costPerClick;
     }
 }
