@@ -1,9 +1,11 @@
-package io.bittiger.ads;
+package io.bittiger.ads.model;
 
-public class Ad {
+import java.io.Serializable;
+
+public class Ad implements Serializable {
     private long adId;
     private long campaignId;
-    private String keyWords;
+    private String[] keyWords;
     private double bid;
     private double relevantScore;
     private double pClick;
@@ -29,11 +31,11 @@ public class Ad {
         this.campaignId = campaignId;
     }
 
-    public String getKeyWords() {
+    public String[] getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(String keyWords) {
+    public void setKeyWords(String[] keyWords) {
         this.keyWords = keyWords;
     }
 
