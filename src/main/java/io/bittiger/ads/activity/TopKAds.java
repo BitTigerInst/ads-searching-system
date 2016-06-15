@@ -21,11 +21,12 @@ public class TopKAds {
             return selectedAds;
         }
         PriorityQueue<Ad> minHeap = new PriorityQueue<Ad>(k, new Comparator<Ad>() {
+            @Override
             public int compare(Ad o1, Ad o2) {
                 if (o1.getRankScore() == o2.getRankScore()) {
                     return 0;
                 }
-                return o1.getRankScore() > o2.getRankScore() ? -1 : 1;
+                return o1.getRankScore() > o2.getRankScore() ? 1 : -1;
             }
         });
         int i = 0;

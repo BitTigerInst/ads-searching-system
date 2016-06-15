@@ -25,7 +25,7 @@ public class TopKAdsTest {
         ad2.setRankScore(rankScore2);
 
         Ad ad3 = new Ad();
-        ad2.setRankScore(rankScore3);
+        ad3.setRankScore(rankScore3);
 
         List<Ad> rankedAds= new ArrayList<Ad>();
         rankedAds.add(ad1);
@@ -35,9 +35,11 @@ public class TopKAdsTest {
         List<Ad> selectedAds = TopKAds.getInstance().selectTopKAds(rankedAds, 1);
         List<Ad> selectedAds2 = TopKAds.getInstance().selectTopKAds(rankedAds, 2);
 
+        //selectedAds result
         assertEquals(ad3.getRankScore(), selectedAds.get(0).getRankScore(), 1.2);
-        assertEquals(ad3.getRankScore(), selectedAds2.get(0).getRankScore(), 1.2);
 
+        //selectedAds2 result
+        assertEquals(ad3.getRankScore(), selectedAds2.get(0).getRankScore(), 1.2);
         assertEquals(ad2.getRankScore(), selectedAds2.get(1).getRankScore(), 1.1);
 
 
