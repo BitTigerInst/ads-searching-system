@@ -38,7 +38,13 @@ public class AdsSelect {
             return ads;
         }
 
-        //to be discussed
+        /* tmp ads*/
+        long key = 0;
+        for (char c : keyword.toCharArray()) {
+            key += c - 'a';
+        }
+        /* tmp ads*/
+        ads.add(AdsDao.getInstance().getAd(key));
 
         return ads;
     }
