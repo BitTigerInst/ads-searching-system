@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TopKAdsTest {
 
@@ -19,12 +19,16 @@ public class TopKAdsTest {
         double rankScore3 = 1.2;
 
         Ad ad1 = new Ad();
+        ad1.setAdId(1);
         ad1.setRankScore(rankScore1);
 
         Ad ad2 = new Ad();
+        ad2.setAdId(2);
         ad2.setRankScore(rankScore2);
 
+
         Ad ad3 = new Ad();
+        ad3.setAdId(3);
         ad3.setRankScore(rankScore3);
 
         List<Ad> rankedAds= new ArrayList<Ad>();
@@ -37,10 +41,14 @@ public class TopKAdsTest {
 
         //selectedAds result
         assertEquals(ad3.getRankScore(), selectedAds.get(0).getRankScore(), 1.2);
+        assertEquals(ad3.getAdId(), selectedAds.get(0).getAdId());
 
         //selectedAds2 result
         assertEquals(ad3.getRankScore(), selectedAds2.get(0).getRankScore(), 1.2);
         assertEquals(ad2.getRankScore(), selectedAds2.get(1).getRankScore(), 1.1);
+        assertSame(ad3, selectedAds2.get(0));
+        assertNotNull(selectedAds2.get(1));
+        assertSame("top 2", ad2, selectedAds2.get(1));
 
 
     }

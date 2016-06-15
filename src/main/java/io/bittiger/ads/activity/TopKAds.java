@@ -33,16 +33,16 @@ public class TopKAds {
         while (i < rankedAds.size() && i < k) {
             minHeap.add(rankedAds.get(i++));
         }
-        if (k < rankedAds.size()) {
-            while (i < rankedAds.size()) {
-                Ad cur = rankedAds.get(i);
-                if (cur.getRankScore() > minHeap.peek().getRankScore()) {
-                    minHeap.poll();
-                    minHeap.offer(cur);
-                }
-                i++;
+
+        while (i < rankedAds.size()) {
+            Ad cur = rankedAds.get(i);
+            if (cur.getRankScore() > minHeap.peek().getRankScore()) {
+                minHeap.poll();
+                minHeap.offer(cur);
             }
+            i++;
         }
+
         while (!minHeap.isEmpty()) {
             selectedAds.addFirst(minHeap.poll());
         }
