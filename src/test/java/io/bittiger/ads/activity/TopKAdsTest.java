@@ -40,15 +40,17 @@ public class TopKAdsTest {
         List<Ad> selectedAds2 = TopKAds.getInstance().selectTopKAds(rankedAds, 2);
 
         //selectedAds result
+        assertNotNull(selectedAds);
         assertEquals(ad3.getRankScore(), selectedAds.get(0).getRankScore(), 1.2);
         assertEquals(ad3.getAdId(), selectedAds.get(0).getAdId());
 
         //selectedAds2 result
+        assertNotNull(selectedAds2);
         assertEquals(ad3.getRankScore(), selectedAds2.get(0).getRankScore(), 1.2);
-        assertEquals(ad2.getRankScore(), selectedAds2.get(1).getRankScore(), 1.1);
         assertSame(ad3, selectedAds2.get(0));
         assertNotNull(selectedAds2.get(1));
         assertSame("top 2", ad2, selectedAds2.get(1));
+        assertEquals(ad2.getRankScore(), selectedAds2.get(1).getRankScore(), 1.1);
 
 
     }
