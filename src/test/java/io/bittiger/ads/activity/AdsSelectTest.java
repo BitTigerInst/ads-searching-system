@@ -1,0 +1,57 @@
+package io.bittiger.ads.activity;
+
+import io.bittiger.ads.model.Ad;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class AdsSelectTest {
+
+    @Test
+    public void testAdsSelect() {
+
+        Ad ad1 = initAd(1, new String[]{"word1"});
+        Ad ad2 = initAd(2, new String[]{"word2"});
+        Ad ad3 = initAd(3, new String[]{"word1", "word2", "word3"});
+
+        List<Ad> expectedAdsWithWord1 = {ad1, ad3};
+        List<Ad> expectedAdsWithWord2 = {ad2, ad3};
+        List<Ad> expectedAdsWithWord3 = {ad3};
+        List<Ad> expectedAdsWithWord12 = {ad1, ad2, ad3};
+
+        AdsDao.getInstance().setAd(ad1);
+        AdsDao.getInstance().setAd(ad2);
+        AdsDao.getInstance().setAd(ad3);
+
+        List<Ad> res1 = AdsSelect.getInstance().getMatchedAds(new String[]{"word1"});
+        List<Ad> res2 = AdsSelect.getInstance().getMatchedAds(new String[]{"word2"});
+        List<Ad> res3 = AdsSelect.getInstance().getMatchedAds(new String[]{"word3"});
+        List<Ad> res4 = AdsSelect.getInstance().getMatchedAds(new String[]{"word1", "word2"});
+
+        assertNotNull(res1);
+        assertEquals(2, res1.size());
+        assertEquals(expectedAdsWithWord1.get(0), res1.get(0));
+        assertEquals(expectedAdsWithWord1.get(1), res1.get(1));
+
+        assertNotNull(res2);
+        assertEquals(2, res2.size());
+        assertEquals(expectedAdsWithWord2.get(0), res2.get(0));
+        assertEquals(expectedAdsWithWord2.get(1), res2.get(1));
+
+        assertNotNull(res3);
+        assertEquals(1, res3.size());
+        assertEquals(expectedAdsWithWord1.get(0), res1.get(0));
+        
+        assertNotNull(res4);
+        assertEquals(3, res1.size());
+        assertEquals(expectedAdsWithWord1.get(0), res1.get(0));
+        assertEquals(expectedAdsWithWord1.get(1), res1.get(1));
+        assertEquals(expectedAdsWithWord1.get(2), res1.get(2));
+    }
+
+    private Ad initAd(long adId, String[] keywords) {
+        Ad ad = new Ad();
+        ad.setAdId(adId);
+        ad.setKeywords(keywords);
+    }
+}
