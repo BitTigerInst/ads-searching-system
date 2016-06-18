@@ -1,4 +1,4 @@
-package io.bittiger.ads.model;
+package io.bittiger.ads.util;
 
 import java.io.Serializable;
 
