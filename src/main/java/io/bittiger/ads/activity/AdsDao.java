@@ -22,7 +22,7 @@ public class AdsDao {
         return instance;
     }
 
-    private static MemcachedClient getCache() throws IOException {
+    private MemcachedClient getCache() throws IOException {
         if (cache == null) {
             cache = new MemcachedClient(new InetSocketAddress(MEMCACHED_HOST_NAME, MEMCACHED_PORT));
         }
