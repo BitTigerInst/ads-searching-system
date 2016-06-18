@@ -10,6 +10,7 @@ public class Ad implements Serializable {
     private double relevantScore;
     private double pClick;
     private double rankScore;
+    private double qualityScore;
     private double costPerClick;
 
     public Ad() {
@@ -69,6 +70,14 @@ public class Ad implements Serializable {
 
     public void setRankScore(double rankScore) {
         this.rankScore = rankScore;
+    }
+
+    public double getQualityScore() {
+        return qualityScore;
+    }
+
+    public void setQualityScore(double qualityScore) {
+        this.qualityScore = qualityScore;
     }
 
     public double getCostPerClick() {
