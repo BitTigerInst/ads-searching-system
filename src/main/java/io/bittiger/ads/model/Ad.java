@@ -32,11 +32,11 @@ public class Ad implements Serializable {
     }
 
     public String[] getKeywords() {
-        return keyWords;
+        return keywords;
     }
 
-    public void setKeyWords(String[] keywords) {
-        this.keyWords = keyWords;
+    public void setKeywords(String[] keywords) {
+        this.keywords = keywords;
     }
 
     public double getBid() {

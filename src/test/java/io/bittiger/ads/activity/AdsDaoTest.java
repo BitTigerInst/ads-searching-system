@@ -13,11 +13,14 @@ public class AdsDaoTest {
         long expectedAdId = 1l;
         long expectedCampaignId = 2l;
         long expectedBid = 3l;
+        String[] keywords = {"key1"};
 
         Ad ad = new Ad();
         ad.setAdId(expectedAdId);
         ad.setCampaignId(expectedCampaignId);
         ad.setBid(expectedBid);
+        ad.setKeywords(keywords);
+
 
         AdsDao.getInstance().setAd(ad);
 
