@@ -1,6 +1,9 @@
 package io.bittiger.ads.activity;
-import io.bittiger.ads.model.Ad;
-import java.util.*;
+
+import io.bittiger.ads.util.Ad;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RankAds {
     private static RankAds instance = null;
