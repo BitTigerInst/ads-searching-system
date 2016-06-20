@@ -12,8 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-;
-
 public class QueryUnderstanding {
     private static QueryUnderstanding instance = null;
 
@@ -41,9 +39,7 @@ public class QueryUnderstanding {
             CharTermAttribute termAtt = stream.getAttribute(CharTermAttribute.class);
 
             while (stream.incrementToken()) {
-                String text = termAtt.toString();
-                words.add(text);
-//                System.out.println(text);
+                words.add(termAtt.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,15 +50,14 @@ public class QueryUnderstanding {
     }
 
     private String[] deduplicate(List<String> words) {
-        Set<String> hashset = new HashSet<String>();
-        List<String> output = new ArrayList<String>();
+        Set<String> hashSet = new HashSet<String>();
+        List<String> dedupedWords = new ArrayList<String>();
+
         for (String str : words) {
-            if (!hashset.contains(str)) {
-                output.add(str);
-                hashset.add(str);
+            if (hashSet.add(str)) {
+                dedupedWords.add(str);
             }
         }
-        String[] out = new String[output.size()];
-        return output.toArray(out);
+        return dedupedWords.toArray(new String[dedupedWords.size()]);
     }
 }
