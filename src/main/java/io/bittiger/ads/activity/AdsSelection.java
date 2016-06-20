@@ -4,10 +4,7 @@ import io.bittiger.ads.model.Ad;
 import net.spy.memcached.MemcachedClient;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 import java.lang.String;
 
 public class AdsSelection {
@@ -36,23 +33,29 @@ public class AdsSelection {
             if (curr == null) {
                 curr = AdsDao.getInstance().traverseFwdIndex(keyword);
             }
-            addAds(set, curr);
+            addAds(set, curr, keywords);
         }
-        checkAndSetRelevantScore(ads, set);
+
+        for (Ad ad : set) {
+            ads.add(ad);
+        }
+
         return ads;
     }
 
-    private void checkAndSetRelevantScore(List<Ad> ads, Set<Ad> set) {
-        for (Ad ad : set) {
-            // if Relevant Score was not set manually, set it as 0.5
-            if (ad.getRelevantScore() <= 0) {
-                ad.setRelevantScore(0.5);
+    private void calculateRelevantScore(Ad ad, String[] queries) {
+        String[] keywords = ad.getKeywords();
+        int hit = 0;
+        Arrays.sort(queries);
+        for (String keyword : keywords) {
+            if (Arrays.binarySearch(queries, keyword) >= 0) {
+                ++hit;
             }
-            ads.add(ad);
         }
+        ad.setRelevantScore((double) hit / queries.length);
     }
 
-    private void addAds(Set<Ad> ads, Set<Ad> newAds) {
+    private void addAds(Set<Ad> ads, Set<Ad> newAds, String[] queries) {
         Set<Long> adIds = new HashSet<Long>();
         for (Ad ad : ads) {
             adIds.add(ad.getAdId());
@@ -60,6 +63,7 @@ public class AdsSelection {
 
         for (Ad newAd : newAds) {
             if (!adIds.contains(newAd.getAdId())) {
+                calculateRelevantScore(newAd, queries);
                 ads.add(newAd);
             }
         }
