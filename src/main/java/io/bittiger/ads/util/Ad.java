@@ -12,8 +12,16 @@ public class Ad implements Serializable {
     private double rankScore;
     private double qualityScore;
     private double costPerClick;
-
+    private double qualityScore;
     public Ad() {
+    }
+
+    public double getQualityScore() {
+        return qualityScore;
+    }
+
+    public void setQualityScore(double qualityScore) {
+        this.qualityScore = qualityScore;
     }
 
     public long getAdId() {

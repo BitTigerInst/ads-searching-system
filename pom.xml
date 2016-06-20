@@ -12,7 +12,21 @@
         <junit.version>4.12</junit.version>
         <lucene.version>6.0.1</lucene.version>
         <spymemcached.version>2.12.1</spymemcached.version>
+        <maven_plugin.version>1.6</maven_plugin.version>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${maven_plugin.version}</source>
+                    <target>${maven_plugin.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
