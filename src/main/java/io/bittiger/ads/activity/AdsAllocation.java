@@ -1,15 +1,15 @@
 package io.bittiger.ads.activity;
 
-import io.bittiger.ads.model.Ad;
-import io.bittiger.ads.model.AllocationType;
+import io.bittiger.ads.util.Ad;
+import io.bittiger.ads.util.AllocationType;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.bittiger.ads.util.Config.*;
+
 public class AdsAllocation {
     private static AdsAllocation instance = null;
-    private static double mainlineReservePrice = 1200;
-    private static double minReservePrice = 500;
 
     protected AdsAllocation() {
     }
@@ -38,10 +38,10 @@ public class AdsAllocation {
 
     private boolean isAllocatable(double costPerClick, String level) {
         if (AllocationType.MAINLINE.name().equals(level)) {
-            return costPerClick >= mainlineReservePrice;
+            return costPerClick >= MAINLINE_RESERVE_PRICE;
         } else
             return AllocationType.SIDEBAR.name().equals(level)
-                    && costPerClick >= minReservePrice
-                    && costPerClick < mainlineReservePrice;
+                    && costPerClick >= MIN_RESERVE_PRICE
+                    && costPerClick < MAINLINE_RESERVE_PRICE;
     }
 }
