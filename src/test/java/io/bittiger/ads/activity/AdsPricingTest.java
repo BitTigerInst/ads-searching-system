@@ -1,6 +1,6 @@
 package io.bittiger.ads.activity;
 
-import io.bittiger.ads.model.Ad;
+import io.bittiger.ads.util.Ad;
 import org.junit.Test;
 
 import java.util.ArrayList;
