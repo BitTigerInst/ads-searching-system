@@ -6,15 +6,18 @@ import java.util.*;
 
 public class TopKAds {
     private static TopKAds instance = null;
+
     protected TopKAds() {
 
     }
+
     public static TopKAds getInstance() {
         if (instance == null) {
             instance = new TopKAds();
         }
         return instance;
     }
+
     public List<Ad> selectTopKAds(List<Ad> rankedAds, int k) {
         LinkedList<Ad> selectedAds = new LinkedList<Ad>();
 

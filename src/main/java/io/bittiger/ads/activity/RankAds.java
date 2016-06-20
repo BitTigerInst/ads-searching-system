@@ -1,12 +1,15 @@
 package io.bittiger.ads.activity;
+
 import io.bittiger.ads.model.Ad;
 import java.util.*;
 
 public class RankAds {
     private static RankAds instance = null;
+
     protected RankAds() {
 
     }
+
     public static RankAds getInstance() {
         if (instance == null) {
             instance = new RankAds();
