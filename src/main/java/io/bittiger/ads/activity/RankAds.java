@@ -1,7 +1,14 @@
 package io.bittiger.ads.activity;
 
+<<<<<<< HEAD
 import io.bittiger.ads.model.Ad;
 import java.util.*;
+=======
+import io.bittiger.ads.util.Ad;
+
+import java.util.ArrayList;
+import java.util.List;
+>>>>>>> upstream/master
 
 public class RankAds {
     private static RankAds instance = null;
