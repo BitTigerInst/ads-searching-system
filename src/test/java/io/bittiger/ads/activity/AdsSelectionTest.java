@@ -23,18 +23,22 @@ public class AdsSelectionTest {
         List<Ad> expectedAdsWithWord2 = new ArrayList<Ad>(Arrays.asList(ad2, ad3));
         List<Ad> expectedAdsWithWord3 = new ArrayList<Ad>(Arrays.asList(ad3));
         List<Ad> expectedAdsWithWord12 = new ArrayList<Ad>(Arrays.asList(ad1, ad2, ad3));
+        double expectedRelevantScore1 = 1.0;
 
         AdsDao.getInstance().setAd(ad1);
         AdsDao.getInstance().setAd(ad2);
         AdsDao.getInstance().setAd(ad3);
 
         List<Ad> res1 = AdsSelection.getInstance().getMatchedAds(new String[]{"word1"});
+        assertEquals(expectedRelevantScore1, res1.get(0).getRelevantScore(), 0.001);
         List<Ad> res2 = AdsSelection.getInstance().getMatchedAds(new String[]{"word2"});
         List<Ad> res3 = AdsSelection.getInstance().getMatchedAds(new String[]{"word3"});
+        assertEquals(expectedRelevantScore1, res3.get(0).getRelevantScore(), 0.001);
         List<Ad> res4 = AdsSelection.getInstance().getMatchedAds(new String[]{"word1", "word2"});
 
         assertNotNull(res1);
         assertEquals(2, res1.size());
+
 
         assertNotNull(res2);
         assertEquals(2, res2.size());

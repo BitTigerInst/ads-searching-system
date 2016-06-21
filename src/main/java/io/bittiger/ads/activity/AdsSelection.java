@@ -4,7 +4,11 @@ import io.bittiger.ads.model.Ad;
 import net.spy.memcached.MemcachedClient;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
 import java.lang.String;
 
 public class AdsSelection {
@@ -48,7 +52,8 @@ public class AdsSelection {
         int hit = 0;
         Arrays.sort(queries);
         for (String keyword : keywords) {
-            if (Arrays.binarySearch(queries, keyword) >= 0) {
+            int index = Arrays.binarySearch(queries, keyword);
+            if (index >= 0) {
                 ++hit;
             }
         }
@@ -62,7 +67,7 @@ public class AdsSelection {
         }
 
         for (Ad newAd : newAds) {
-            if (!adIds.contains(newAd.getAdId())) {
+            if (adIds.add(newAd.getAdId())) {
                 calculateRelevantScore(newAd, queries);
                 ads.add(newAd);
             }
