@@ -86,7 +86,7 @@ public class AdsDao {
                 String invKey = "inv" + keyword;
                 Set<Ad> ads = (Set<Ad>) getCache().get(invKey);
                 if (ads != null) {
-                    addAds(ads, ad);
+                    addOneAd(ads, ad);
                     getCache().replace(invKey, 3600, ads);
                 } else {
                     /****** Add one ad to inv index when invKey does not exist. 
@@ -105,7 +105,7 @@ public class AdsDao {
         }
     }
 
-    private void addAds(Set<Ad> ads, Ad newAd) {
+    private void addOneAd(Set<Ad> ads, Ad newAd) {
         long newId = newAd.getAdId();
         for (Ad ad : ads) {
             if (ad.getAdId() == newId) {

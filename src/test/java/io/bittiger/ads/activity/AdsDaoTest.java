@@ -2,6 +2,7 @@ package io.bittiger.ads.activity;
 
 import io.bittiger.ads.model.Ad;
 import org.junit.Test;
+import java.lang.String;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,11 +22,12 @@ public class AdsDaoTest {
         ad.setBid(expectedBid);
         ad.setKeywords(keywords);
 
-
         AdsDao.getInstance().setAd(ad);
 
         Ad res = AdsDao.getInstance().getAd(expectedAdId);
+        String[] currKeywords = res.getKeywords();
 
+        assertEquals(keywords[0], currKeywords[0]);
         assertEquals(expectedBid, res.getBid(), 0.001);
         assertEquals(expectedCampaignId, res.getCampaignId(), 0.001);
     }
