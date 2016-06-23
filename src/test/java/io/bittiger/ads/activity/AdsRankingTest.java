@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class RankAdsTest {
+public class AdsRankingTest {
 
     @Test
     public void testRankAds() {
@@ -43,7 +43,7 @@ public class RankAdsTest {
         assertEquals(0.0, ad3.getRankScore(), 0);
 
         //rankedAds result
-        List<Ad> rankedAds = RankAds.getInstance().rankAds(filteredAds);
+        List<Ad> rankedAds = AdsRanking.getInstance().rankAds(filteredAds);
         assertNotNull(rankedAds);
         assertEquals(0.275, ad1.getQualityScore(), 0.001);
         assertEquals(0.825, ad1.getRankScore(), 0.001);
