@@ -1,6 +1,6 @@
 package io.bittiger.ads.activity;
 
-import io.bittiger.ads.model.Ad;
+import io.bittiger.ads.util.Ad;
 import net.spy.memcached.MemcachedClient;
 
 import java.util.Set;
@@ -8,6 +8,8 @@ import java.util.HashSet;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+
+import static io.bittiger.ads.util.Config.*;
 
 public class AdsDao {
     private static AdsDao instance = null;
@@ -23,9 +25,9 @@ public class AdsDao {
         return instance;
     }
 
-    private static MemcachedClient getCache() throws IOException {
+    private MemcachedClient getCache() throws IOException {
         if (cache == null) {
-            cache = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+            cache = new MemcachedClient(new InetSocketAddress(MEMCACHED_HOST_NAME, MEMCACHED_PORT));
         }
         return cache;
     }
@@ -34,7 +36,7 @@ public class AdsDao {
 
         String someObject = "Some Object";
 
-        getCache().set("someKey", 3600, someObject);
+        getCache().set("someKey", MEMCACHED_EXPIRATION_TIME, someObject);
 
         Object object = getCache().get("someKey");
 
@@ -78,7 +80,7 @@ public class AdsDao {
 
         try {
             /****** Add one single ad to fwd index ******/
-            getCache().set(fwdKey, 3600, ad);
+            getCache().set(fwdKey, MEMCACHED_EXPIRATION_TIME, ad);
 
             /****** Add one ad to inv index if invKey exist ******/
             String[] keywords = ad.getKeywords();
