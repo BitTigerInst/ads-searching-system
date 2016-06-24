@@ -1,20 +1,18 @@
 package io.bittiger.ads.activity;
 
 import io.bittiger.ads.util.Ad;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class RankAds {
-    private static RankAds instance = null;
-
-    protected RankAds() {
+public class AdsRanking {
+    private static AdsRanking instance = null;
+    protected AdsRanking() {
 
     }
-
-    public static RankAds getInstance() {
+    public static AdsRanking getInstance() {
         if (instance == null) {
-            instance = new RankAds();
+            instance = new AdsRanking();
         }
         return instance;
     }

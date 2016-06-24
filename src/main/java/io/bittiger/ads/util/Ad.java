@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Ad implements Serializable {
     private long adId;
     private long campaignId;
-    private String[] keyWords;
+    private String[] keywords;
     private double bid;
     private double relevantScore;
     private double pClick;
@@ -32,12 +32,12 @@ public class Ad implements Serializable {
         this.campaignId = campaignId;
     }
 
-    public String[] getKeyWords() {
-        return keyWords;
+    public String[] getKeywords() {
+        return keywords;
     }
 
-    public void setKeyWords(String[] keyWords) {
-        this.keyWords = keyWords;
+    public void setKeywords(String[] keywords) {
+        this.keywords = keywords;
     }
 
     public double getBid() {
