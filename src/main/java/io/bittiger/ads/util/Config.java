@@ -11,6 +11,8 @@ public class Config {
 
 
     // Workflow settings
+    public static final int TOP_K_ADS = 5;
+
     public static final double MIN_RELEVANT_SCORE = 0.3;
 
     public static final double MIN_PCLICK = 0.1;

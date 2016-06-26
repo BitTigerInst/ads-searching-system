@@ -34,7 +34,7 @@ public class AdsEngine {
 
             List<Ad> rankedAds = AdsRanking.getInstance().rankAds(filteredAds);
 
-            List<Ad> selectedSortedAds = TopKAds.getInstance().selectTopKAds(rankedAds, 5);
+            List<Ad> selectedSortedAds = TopKAds.getInstance().selectTopKAds(rankedAds);
 
             List<Ad> pricedAds = AdsPricing.getInstance().processPricing(selectedSortedAds);
 
