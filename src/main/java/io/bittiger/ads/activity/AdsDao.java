@@ -32,15 +32,21 @@ public class AdsDao {
         return cache;
     }
 
+    public void shutdown() {
+        cache.shutdown();
+    }
+
     public void testMemcached() throws IOException {
 
         String someObject = "Some Object";
 
-        getCache().set("someKey", MEMCACHED_EXPIRATION_TIME, someObject);
+//        getCache().set("someKey", MEMCACHED_EXPIRATION_TIME, someObject);
 
         Object object = getCache().get("someKey");
 
         System.out.println(object);
+
+//        getCache().delete("someKey");
     }
 
 
@@ -89,7 +95,7 @@ public class AdsDao {
                 Set<Ad> ads = (Set<Ad>) getCache().get(invKey);
                 if (ads != null) {
                     addOneAd(ads, ad);
-                    getCache().replace(invKey, 3600, ads);
+                    getCache().replace(invKey, MEMCACHED_EXPIRATION_TIME, ads);
                 } else {
                     /****** Add one ad to inv index when invKey does not exist. 
                      * This will be moved to AdsSelection after we find one way
@@ -97,7 +103,7 @@ public class AdsDao {
 
                     ads = new HashSet<Ad>();
                     ads.add(ad);
-                    getCache().set(invKey, 3600, ads);
+                    getCache().set(invKey, MEMCACHED_EXPIRATION_TIME, ads);
                 }
             }
             return true;
