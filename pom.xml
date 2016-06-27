@@ -13,6 +13,8 @@
         <lucene.version>6.0.1</lucene.version>
         <spymemcached.version>2.12.1</spymemcached.version>
         <maven_plugin.version>1.6</maven_plugin.version>
+        <gson.version>2.7</gson.version>
+        <json.version>20160212</json.version>
     </properties>
 
     <build>
@@ -52,6 +54,20 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
         </dependency>
     </dependencies>
 
