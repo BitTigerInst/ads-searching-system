@@ -19,6 +19,8 @@ public class AdsEngine {
 
     public static void main (String[] args) throws IOException {
 
+        AdsDao.getInstance().loadLogfile();
+
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Please enter your query (Enter Q to exit):");
