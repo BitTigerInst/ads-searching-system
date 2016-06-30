@@ -1,8 +1,9 @@
+<%@ page import="java.io.PrintWriter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
   <meta charset="ISO-8859-1">
-  <title>AJAX with Servlets using AngularJS</title>
+  <title>Ads Searching System</title>
   <script type="text/javascript" src="resources/angular-1.5.7/angular.js"></script>
   <script type="text/javascript" src="resources/angular-1.5.7/angular.min.js"></script>
   <link rel="stylesheet" type="text/css" href="resources/css/theme.css">
@@ -27,13 +28,16 @@
           }
         }).then(function(response) {
           console.log(response.data);
-          $scope.message = response.data;
+ //         alert("success!~"+response.data);
+          $scope.ads = response.data;
+//          $scope.mainlineAds = response.data.mainline;
+//          $scope.sidebarAds = response.data.bar;
         }, function(response) {
           //fail case
+//          alert("fail!~"+response.data);
           console.log(response);
           $scope.message = response;
-        });
-
+        })
       };
     } ]);
 
@@ -68,32 +72,34 @@
     </div>
   </div>
 
-  <div class="alert alert-success" role="alert">{{message}}</div>
-  <div class="row marketing">
-    <div class="col-lg-6">
-      <%--ad in mainline--%>
-      <h4>Ad1</h4>
-      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+  <div class="alert alert-success" role="alert" ng-if="!message">{{ads}}</div>
+  <div class="alert alert-warning" role="alert" ng-if="message">{{message}}</div>
 
-      <h4>Ad2</h4>
-      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+  <%--<div class="row marketing">--%>
+    <%--<div class="col-lg-6">--%>
+      <%--&lt;%&ndash;ad in mainline&ndash;%&gt;--%>
+      <%--<h4>Ad1</h4>--%>
+      <%--<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>--%>
 
-      <h4>Ad3</h4>
-      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-    </div>
+      <%--<h4>Ad2</h4>--%>
+      <%--<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>--%>
 
-    <div class="col-lg-6">
-      <%--ad in sidebar--%>
-      <h4>Ad1</h4>
-      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+      <%--<h4>Ad3</h4>--%>
+      <%--<p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>--%>
+    <%--</div>--%>
 
-      <h4>Ad2</h4>
-      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+    <%--<div class="col-lg-6">--%>
+      <%--&lt;%&ndash;ad in sidebar&ndash;%&gt;--%>
+      <%--<h4>Ad1</h4>--%>
+      <%--<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>--%>
 
-      <h4>Ad3</h4>
-      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-    </div>
-  </div>
+      <%--<h4>Ad2</h4>--%>
+      <%--<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>--%>
+
+      <%--<h4>Ad3</h4>--%>
+      <%--<p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>--%>
+    <%--</div>--%>
+  <%--</div>--%>
 
   <footer class="footer">
     <p>&copy; 2016 ads-searching, Inc.</p>
@@ -101,6 +107,5 @@
 
 </div> <!-- /container -->
 </div>
-
 </body>
 </html>

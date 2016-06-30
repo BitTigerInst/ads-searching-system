@@ -9,6 +9,20 @@ public class Config {
 
     public static final int MEMCACHED_EXPIRATION_TIME = 3600;
 
+    // Data resource settings
+    public static final String USER_DIR = "user.dir";
+
+    public static final String ADS_LOCATION = "/src/main/resources/ads.json";
+
+    public static final String AD_ID = "adId";
+
+    public static final String CAMPAIGN_ID = "campaignId";
+
+    public static final String KEYWORDS = "keywords";
+
+    public static final String BID = "bid";
+
+    public static final String PCLICK = "pclick";
 
     // Workflow settings
     public static final double MIN_RELEVANT_SCORE = 0.3;

@@ -27,6 +27,7 @@ public class AdsRanking {
             ad.setQualityScore(qualityScore);
             double rankScore = qualityScore * ad.getBid();
             ad.setRankScore(rankScore);
+            rankedAds.add(ad);
         }
         return rankedAds;
     }
