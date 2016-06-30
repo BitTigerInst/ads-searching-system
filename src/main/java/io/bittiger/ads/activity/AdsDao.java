@@ -2,12 +2,15 @@ package io.bittiger.ads.activity;
 
 import io.bittiger.ads.util.Ad;
 import net.spy.memcached.MemcachedClient;
+import org.json.JSONArray;
 
-import java.util.Set;
-import java.util.HashSet;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.HashSet;
+import java.util.Set;
 
 import static io.bittiger.ads.util.Config.*;
 
@@ -32,17 +35,46 @@ public class AdsDao {
         return cache;
     }
 
-    public void testMemcached() throws IOException {
-
-        String someObject = "Some Object";
-
-        getCache().set("someKey", MEMCACHED_EXPIRATION_TIME, someObject);
-
-        Object object = getCache().get("someKey");
-
-        System.out.println(object);
+    public void shutdown() {
+        cache.shutdown();
     }
 
+    public boolean loadLogfile() throws IOException {
+
+        String jsonData = readFile(System.getProperty(USER_DIR) + ADS_LOCATION);
+
+        JSONArray jsonArr = new JSONArray(jsonData);
+
+        for (int i = 0; i < jsonArr.length(); i++) {
+            Ad ad = new Ad();
+            ad.setAdId(jsonArr.getJSONObject(i).getLong(AD_ID));
+            ad.setCampaignId(jsonArr.getJSONObject(i).getLong(CAMPAIGN_ID));
+            ad.setKeywords(QueryUnderstanding.getInstance().parseQuery(jsonArr.getJSONObject(i).getString(KEYWORDS)));
+            ad.setBid(jsonArr.getJSONObject(i).getDouble(BID));
+            ad.setpClick(jsonArr.getJSONObject(i).getDouble(PCLICK));
+
+            setAd(ad);
+        }
+
+        return true;
+    }
+
+    private String readFile(String filename) {
+        String result = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                sb.append(line);
+                line = br.readLine();
+            }
+            result = sb.toString();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     /****** Inverted Index ******/
     public Set<Ad> getAds(String key) {
@@ -89,7 +121,7 @@ public class AdsDao {
                 Set<Ad> ads = (Set<Ad>) getCache().get(invKey);
                 if (ads != null) {
                     addOneAd(ads, ad);
-                    getCache().replace(invKey, 3600, ads);
+                    getCache().replace(invKey, MEMCACHED_EXPIRATION_TIME, ads);
                 } else {
                     /****** Add one ad to inv index when invKey does not exist. 
                      * This will be moved to AdsSelection after we find one way
@@ -97,7 +129,7 @@ public class AdsDao {
 
                     ads = new HashSet<Ad>();
                     ads.add(ad);
-                    getCache().set(invKey, 3600, ads);
+                    getCache().set(invKey, MEMCACHED_EXPIRATION_TIME, ads);
                 }
             }
             return true;
