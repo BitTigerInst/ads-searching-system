@@ -7,17 +7,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import static io.bittiger.ads.util.Config.*;
+
 public class TopKAds {
     private static TopKAds instance = null;
+
     protected TopKAds() {
 
     }
+
     public static TopKAds getInstance() {
         if (instance == null) {
             instance = new TopKAds();
         }
         return instance;
     }
+
+    public List<Ad> selectTopKAds(List<Ad> rankedAds) {
+        return selectTopKAds(rankedAds, TOP_K_ADS);
+    }
+
     public List<Ad> selectTopKAds(List<Ad> rankedAds, int k) {
         LinkedList<Ad> selectedAds = new LinkedList<Ad>();
 

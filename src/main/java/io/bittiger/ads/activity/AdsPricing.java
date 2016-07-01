@@ -20,7 +20,7 @@ public class AdsPricing {
     public List<Ad> processPricing(List<Ad> targetedAds) {
 
         if (targetedAds == null || targetedAds.size() == 0) {
-            return null;
+            return targetedAds;
         }
 
         for (int i = 0; i < targetedAds.size() - 1; i++) {
