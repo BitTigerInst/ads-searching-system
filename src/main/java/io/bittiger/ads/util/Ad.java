@@ -1,4 +1,4 @@
-package io.bittiger.ads.model;
+package io.bittiger.ads.util;
 
 import java.io.Serializable;
 
@@ -9,6 +9,7 @@ public class Ad implements Serializable {
     private double bid;
     private double relevantScore;
     private double pClick;
+    private double qualityScore;
     private double rankScore;
     private double costPerClick;
 
@@ -61,6 +62,14 @@ public class Ad implements Serializable {
 
     public void setpClick(double pClick) {
         this.pClick = pClick;
+    }
+
+    public double getQualityScore() {
+        return qualityScore;
+    }
+
+    public void setQualityScore(double qualityScore) {
+        this.qualityScore = qualityScore;
     }
 
     public double getRankScore() {

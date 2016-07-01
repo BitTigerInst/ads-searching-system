@@ -1,6 +1,6 @@
 package io.bittiger.ads.activity;
 
-import io.bittiger.ads.model.Ad;
+import io.bittiger.ads.util.Ad;
 import net.spy.memcached.MemcachedClient;
 
 import java.io.IOException;
@@ -25,7 +25,6 @@ public class AdsSelection {
     }
 
     public List<Ad> getMatchedAds(String[] keywords) {
-        List<Ad> ads = new ArrayList<Ad>();
         if (keywords == null || keywords.length == 0) {
             return new ArrayList<Ad>();
         }
@@ -40,9 +39,7 @@ public class AdsSelection {
             addAds(set, curr, keywords);
         }
 
-        for (Ad ad : set) {
-            ads.add(ad);
-        }
+        List<Ad> ads = new ArrayList<Ad>(set);
 
         return ads;
     }
