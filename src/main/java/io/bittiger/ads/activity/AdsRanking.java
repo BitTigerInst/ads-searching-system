@@ -2,7 +2,6 @@ package io.bittiger.ads.activity;
 
 import io.bittiger.ads.util.Ad;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdsRanking {
@@ -18,9 +17,8 @@ public class AdsRanking {
     }
 
     public List<Ad> rankAds(List<Ad> filteredAds) {
-        List<Ad> rankedAds = new ArrayList<Ad>();
         if (filteredAds == null || filteredAds.size() == 0) {
-            return rankedAds;
+            return filteredAds;
         }
         for (Ad ad: filteredAds) {
             double qualityScore = 0.75 * ad.getpClick() + 0.25 * ad.getRelevantScore();
@@ -28,6 +26,6 @@ public class AdsRanking {
             double rankScore = qualityScore * ad.getBid();
             ad.setRankScore(rankScore);
         }
-        return rankedAds;
+        return filteredAds;
     }
 }
