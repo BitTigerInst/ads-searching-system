@@ -4,7 +4,6 @@ import io.bittiger.ads.util.Ad;
 import net.spy.memcached.MemcachedClient;
 import org.json.JSONArray;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,7 +39,9 @@ public class AdsDao {
     }
 
     public boolean loadLogfile() throws IOException {
-
+        /* MUST set our own path to read the file, for example:
+        *  String jsonData = readFile("/Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION);
+        * */
         String jsonData = readFile(System.getProperty(USER_DIR) + ADS_LOCATION);
 
         JSONArray jsonArr = new JSONArray(jsonData);
