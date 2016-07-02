@@ -75,32 +75,6 @@
   <div class="alert alert-success" role="alert" ng-if="!message">{{ads}}</div>
   <div class="alert alert-warning" role="alert" ng-if="message">{{message}}</div>
 
-  <%--<div class="row marketing">--%>
-    <%--<div class="col-lg-6">--%>
-      <%--&lt;%&ndash;ad in mainline&ndash;%&gt;--%>
-      <%--<h4>Ad1</h4>--%>
-      <%--<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>--%>
-
-      <%--<h4>Ad2</h4>--%>
-      <%--<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>--%>
-
-      <%--<h4>Ad3</h4>--%>
-      <%--<p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>--%>
-    <%--</div>--%>
-
-    <%--<div class="col-lg-6">--%>
-      <%--&lt;%&ndash;ad in sidebar&ndash;%&gt;--%>
-      <%--<h4>Ad1</h4>--%>
-      <%--<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>--%>
-
-      <%--<h4>Ad2</h4>--%>
-      <%--<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>--%>
-
-      <%--<h4>Ad3</h4>--%>
-      <%--<p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>--%>
-    <%--</div>--%>
-  <%--</div>--%>
-
   <footer class="footer">
     <p>&copy; 2016 ads-searching, Inc.</p>
   </footer>
