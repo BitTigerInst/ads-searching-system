@@ -87,4 +87,10 @@ public class Ad implements Serializable {
     public void setCostPerClick(double costPerClick) {
         this.costPerClick = costPerClick;
     }
+
+    @Override
+    public String toString() {
+        return "[ Ad Id: "+getAdId()+", Campaign Id: "+ getCampaignId()+", Bid: "+ getBid()+", Relevant Score: "+getRelevantScore()+", pclick: "+ getpClick()
+                +", Quality Score: "+ getQualityScore()+", CostPerClick: "+getCostPerClick()+" ]";
+    }
 }
