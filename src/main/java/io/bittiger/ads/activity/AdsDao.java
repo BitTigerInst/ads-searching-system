@@ -6,11 +6,10 @@ import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Set;
-import java.util.HashSet;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.HashSet;
+import java.util.Set;
 
 import static io.bittiger.ads.util.Config.*;
 
@@ -33,17 +32,6 @@ public class AdsDao {
             cache = new MemcachedClient(new InetSocketAddress(MEMCACHED_HOST_NAME, MEMCACHED_PORT));
         }
         return cache;
-    }
-
-    public void testMemcached() throws IOException {
-
-        String someObject = "Some Object";
-
-        getCache().set("someKey", MEMCACHED_EXPIRATION_TIME, someObject);
-
-        Object object = getCache().get("someKey");
-
-        System.out.println(object);
     }
 
     public void shutdown() {
@@ -135,7 +123,7 @@ public class AdsDao {
                 Set<Ad> ads = (Set<Ad>) getCache().get(invKey);
                 if (ads != null) {
                     addOneAd(ads, ad);
-                    getCache().replace(invKey, 3600, ads);
+                    getCache().replace(invKey, MEMCACHED_EXPIRATION_TIME, ads);
                 } else {
                     /****** Add one ad to inv index when invKey does not exist. 
                      * This will be moved to AdsSelection after we find one way
@@ -143,7 +131,7 @@ public class AdsDao {
 
                     ads = new HashSet<Ad>();
                     ads.add(ad);
-                    getCache().set(invKey, 3600, ads);
+                    getCache().set(invKey, MEMCACHED_EXPIRATION_TIME, ads);
                 }
             }
             return true;
