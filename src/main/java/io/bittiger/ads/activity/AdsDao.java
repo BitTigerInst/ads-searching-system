@@ -68,9 +68,13 @@ public class AdsDao {
     }
 
     public boolean loadLogfile() throws IOException {
-
+        /* System.getProperty(USER_DIR) + ADS_LOCATION cannot is not file path
+        readFile path should set to your own path,
+        for example:
+        /Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION
+        */
         String jsonData = readFile(System.getProperty(USER_DIR) + ADS_LOCATION);
-
+        System.out.println(System.getProperty(USER_DIR));
         JSONArray jsonArr = new JSONArray(jsonData);
 
         for (int i = 0; i < jsonArr.length(); i++) {
@@ -83,7 +87,6 @@ public class AdsDao {
 
             setAd(ad);
         }
-
         return true;
     }
 

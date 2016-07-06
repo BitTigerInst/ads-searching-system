@@ -34,7 +34,6 @@ public class Config {
 
     public static final String PCLICK = "pclick";
 
-
     // Workflow settings
     public static final int TOP_K_ADS = 5;
 
