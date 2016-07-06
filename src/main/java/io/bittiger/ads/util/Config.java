@@ -9,6 +9,15 @@ public class Config {
 
     public static final int MEMCACHED_EXPIRATION_TIME = 3600;
 
+    // MongoDB setting
+
+    public static final String MONGODB_HOST_NAME = "localhost";
+
+    public static final int MONGODB_PORT = 27017;
+
+    public static final String ADS_DB = "adsDB";
+
+    public static final String ADS_COLLECTION = "adsCollection";
 
     // Data resource settings
     public static final String USER_DIR = "user.dir";
