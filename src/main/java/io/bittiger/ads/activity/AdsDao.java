@@ -1,6 +1,5 @@
 package io.bittiger.ads.activity;
 
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -124,24 +123,22 @@ public class AdsDao {
         DBCursor cursor = collection.find(new BasicDBObject(AD_ID, key));
         while (cursor.hasNext()) {
             DBObject theObj = cursor.next();
-            BasicDBList adList = (BasicDBList) theObj.get(AD_ID);
-            for (int i = 0; i < adList.size(); i++) {
-                BasicDBObject adObj = (BasicDBObject) adList.get(i);
-                String strAdId = adObj.getString(AD_ID);
-                String strCampaignId = adObj.getString(CAMPAIGN_ID);
-                String[] keywords = adObj.getString(KEYWORDS).split(" ");
-                String strBid = adObj.getString(BID);
-                String strPClick = adObj.getString(PCLICK);
+                Long adId = (Long)(theObj.get(AD_ID));
+                Long campaignId = (Long)theObj.get(CAMPAIGN_ID);
+                String keywordsArray = (String)theObj.get(KEYWORDS);
+                String[] keywords = keywordsArray.split(" ");
+                Double bid = (Double)theObj.get(BID);
+                Double pClick = (Double)theObj.get(PCLICK);
 
                 Ad ad = new Ad();
-                ad.setAdId(Long.parseLong(strAdId));
-                ad.setCampaignId(Long.parseLong(strCampaignId));
+                ad.setAdId(adId);
+                ad.setCampaignId(campaignId);
                 ad.setKeywords(keywords);
-                ad.setBid(Double.parseDouble(strBid));
-                ad.setpClick(Double.parseDouble(strPClick));
+                ad.setBid(bid);
+                ad.setpClick(pClick);
 
                 addOneAd(ads, ad);
-            }
+//            }
         }
         return new ArrayList<Ad>(ads).get(0);
     }
@@ -151,27 +148,25 @@ public class AdsDao {
         DBCollection collection = getAdsCollection();
         DBCursor cursor = collection.find();
         while (cursor.hasNext()) {
-            DBObject theObj = cursor.next();
-            BasicDBList adList = (BasicDBList) theObj.get("adId");
-            for (int i = 0; i < adList.size(); i++) {
-                BasicDBObject adObj = (BasicDBObject) adList.get(i);
-                String keywords_str = adObj.getString(KEYWORDS);
-                if (keywords_str.contains(keyword)) {
-                    String strAdId = adObj.getString(AD_ID);
-                    String strCampaignId = adObj.getString(CAMPAIGN_ID);
-                    String[] keywords = keywords_str.split(" ");
-                    String strBid = adObj.getString(BID);
-                    String strPClick = adObj.getString(PCLICK);
 
-                    Ad ad = new Ad();
-                    ad.setAdId(Long.parseLong(strAdId));
-                    ad.setCampaignId(Long.parseLong(strCampaignId));
-                    ad.setKeywords(keywords);
-                    ad.setBid(Double.parseDouble(strBid));
-                    ad.setpClick(Double.parseDouble(strPClick));
+            DBObject adObj = cursor.next();
+            String keywords_str = (String)adObj.get(KEYWORDS);
 
-                    addOneAd(ads, ad);
-                }
+            if (keywords_str.contains(keyword)) {
+                Long adId = (Long)(adObj.get(AD_ID));
+                Long campaignId = (Long)adObj.get(CAMPAIGN_ID);
+                String[] keywords = keywords_str.split(" ");
+                Double bid = (Double)adObj.get(BID);
+                Double pClick = (Double)adObj.get(PCLICK);
+
+                Ad ad = new Ad();
+                ad.setAdId(adId);
+                ad.setCampaignId(campaignId);
+                ad.setKeywords(keywords);
+                ad.setBid(bid);
+                ad.setpClick(pClick);
+
+                addOneAd(ads, ad);
             }
         }
         return ads;
