@@ -72,7 +72,7 @@ public class AdsDao {
         for example:
         "/Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION
         */
-        String jsonData = readFile(System.getProperty(USER_DIR) + ADS_LOCATION);
+        String jsonData = readFile("/Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION);
         System.out.println(System.getProperty(USER_DIR));
         JSONArray jsonArr = new JSONArray(jsonData);
 

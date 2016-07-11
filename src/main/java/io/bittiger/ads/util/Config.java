@@ -34,6 +34,10 @@ public class Config {
 
     public static final String PCLICK = "pclick";
 
+    public static final String RELEVANTSCORE= "relevantScore";
+
+    public static final String QUALITYSCORE = "qualityScore";
+
     // Workflow settings
     public static final int TOP_K_ADS = 5;
 
@@ -44,4 +48,6 @@ public class Config {
     public static final double MIN_RESERVE_PRICE = 500;
 
     public static final double MAINLINE_RESERVE_PRICE = 1200;
+
+
 }
