@@ -22,7 +22,7 @@ public class TopKAds {
         }
         return instance;
     }
-    
+
     public List<Ad> selectTopKAds(List<Ad> rankedAds) {
         return selectTopKAds(rankedAds, TOP_K_ADS);
     }
