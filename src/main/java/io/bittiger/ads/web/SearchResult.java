@@ -24,7 +24,7 @@ import static io.bittiger.ads.util.Config.*;
 public class SearchResult extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-/*
+    /*load data into MongoDB*/
     public void init() throws ServletException {
         try {
           AdsDao.getInstance().loadLogfile();
@@ -33,7 +33,6 @@ public class SearchResult extends HttpServlet {
         }
 
 }
-*/
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
