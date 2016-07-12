@@ -24,14 +24,15 @@ import static io.bittiger.ads.util.Config.*;
 public class SearchResult extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-public void init() throws ServletException {
-    try {
-        AdsDao.getInstance().loadLogfile();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
+    /*load data into MongoDB*/
+    public void init() throws ServletException {
+        try {
+          AdsDao.getInstance().loadLogfile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+}
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -123,11 +124,17 @@ public void init() throws ServletException {
                     out.write("Keywords: "+ key.toString()+"\n");
                     String bid = String.valueOf(main.getLong(BID));
                     out.write("Bid: "+ bid +"\n");
-                    String relevantScore = String.valueOf(main.getDouble("relevantScore"));
+                    double value = main.getDouble(RELEVANTSCORE);
+                    int whole = (int) value;
+                    int fract = (int) ((value - whole) * 100);
+                    String relevantScore = String.valueOf(whole + "." + fract);
                     out.write("Relevant Score: "+ relevantScore +"\n");
                     String pclick = String.valueOf(main.getDouble("pClick"));
                     out.write("pclick: "+ pclick +"\n");
-                    String qualityScore = String.valueOf(main.getDouble("qualityScore"));
+                    double qualityValue = main.getDouble(QUALITYSCORE);
+                    int qualityWhole = (int) qualityValue;
+                    int qualityFract = (int) ((qualityValue - qualityWhole) * 100);
+                    String qualityScore = String.valueOf(qualityWhole + "." + qualityFract);
                     out.write("Quality Score:"+ qualityScore +"\n");
                     String costPerClick = String.valueOf(main.getLong("costPerClick"));
                     out.write("Cost per Click: "+ costPerClick +"\n");
@@ -160,11 +167,17 @@ public void init() throws ServletException {
                     out.write("Keywords: "+ key.toString()+"\n");
                     String bid = String.valueOf(side.getLong(BID));
                     out.write("Bid: "+ bid +"\n");
-                    String relevantScore = String.valueOf(side.getDouble("relevantScore"));
+                    double value = side.getDouble(RELEVANTSCORE);
+                    int whole = (int) value;
+                    int fract = (int) ((value - whole) * 100);
+                    String relevantScore = String.valueOf(whole + "." + fract);
                     out.write("Relevant Score: "+ relevantScore +"\n");
                     String pclick = String.valueOf(side.getDouble("pClick"));
                     out.write("pclick: "+ pclick +"\n");
-                    String qualityScore = String.valueOf(side.getDouble("qualityScore"));
+                    double qualityValue = side.getDouble(QUALITYSCORE);
+                    int qualityWhole = (int) qualityValue;
+                    int qualityFract = (int) ((qualityValue - qualityWhole) * 100);
+                    String qualityScore = String.valueOf(qualityWhole + "." + qualityFract);
                     out.write("Quality Score:"+ qualityScore +"\n");
                     String costPerClick = String.valueOf(side.getLong("costPerClick"));
                     out.write("Cost per Click: "+ costPerClick +"\n");

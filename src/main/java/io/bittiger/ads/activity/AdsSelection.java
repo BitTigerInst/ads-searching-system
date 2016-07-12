@@ -54,7 +54,8 @@ public class AdsSelection {
                 ++hit;
             }
         }
-        ad.setRelevantScore((double) hit / queries.length);
+        /*relevantScore = #matches/ #keywords in the Ad*/
+        ad.setRelevantScore((double) hit / ad.getKeywords().length);
     }
 
     private void addAds(Set<Ad> ads, Set<Ad> newAds, String[] queries) {

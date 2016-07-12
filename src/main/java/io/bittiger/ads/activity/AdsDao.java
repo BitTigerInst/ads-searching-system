@@ -49,14 +49,14 @@ public class AdsDao {
         return mongo;
     }
 
-    private DBCollection getAdsCollection(){
-        try{
+    private DBCollection getAdsCollection() {
+        try {
             DB mongoDatabase = getMongo().getDB(ADS_DB);
             System.out.println("Connect to database successfully");
             DBCollection collection = mongoDatabase.getCollection(ADS_COLLECTION);
             System.out.println("Collection chosen successfully");
             return collection;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -70,9 +70,9 @@ public class AdsDao {
         /* System.getProperty(USER_DIR) + ADS_LOCATION cannot is not file path
         readFile path should set to your own path,
         for example:
-        /Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION
+        "/Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION
         */
-        String jsonData = readFile(System.getProperty(USER_DIR) + ADS_LOCATION);
+        String jsonData = readFile("/Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION);
         System.out.println(System.getProperty(USER_DIR));
         JSONArray jsonArr = new JSONArray(jsonData);
 
@@ -100,13 +100,15 @@ public class AdsDao {
                 line = br.readLine();
             }
             result = sb.toString();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    /****** Inverted Index ******/
+    /******
+     * Inverted Index
+     ******/
     public Set<Ad> getAds(String key) {
         try {
             return (Set<Ad>) getCache().get(key);
@@ -116,28 +118,30 @@ public class AdsDao {
         }
     }
 
-    /****** Forward Index ******/
+    /******
+     * Forward Index
+     ******/
     public Ad getAd(long key) {
         Set<Ad> ads = new HashSet<Ad>();
         DBCollection collection = getAdsCollection();
         DBCursor cursor = collection.find(new BasicDBObject(AD_ID, key));
         while (cursor.hasNext()) {
             DBObject theObj = cursor.next();
-                Long adId = (Long)(theObj.get(AD_ID));
-                Long campaignId = (Long)theObj.get(CAMPAIGN_ID);
-                String keywordsArray = (String)theObj.get(KEYWORDS);
-                String[] keywords = keywordsArray.split(" ");
-                Double bid = (Double)theObj.get(BID);
-                Double pClick = (Double)theObj.get(PCLICK);
+            Long adId = (Long) (theObj.get(AD_ID));
+            Long campaignId = (Long) theObj.get(CAMPAIGN_ID);
+            String keywordsArray = (String) theObj.get(KEYWORDS);
+            String[] keywords = keywordsArray.split(" ");
+            Double bid = (Double) theObj.get(BID);
+            Double pClick = (Double) theObj.get(PCLICK);
 
-                Ad ad = new Ad();
-                ad.setAdId(adId);
-                ad.setCampaignId(campaignId);
-                ad.setKeywords(keywords);
-                ad.setBid(bid);
-                ad.setpClick(pClick);
+            Ad ad = new Ad();
+            ad.setAdId(adId);
+            ad.setCampaignId(campaignId);
+            ad.setKeywords(keywords);
+            ad.setBid(bid);
+            ad.setpClick(pClick);
 
-                addOneAd(ads, ad);
+            addOneAd(ads, ad);
 //            }
         }
         return new ArrayList<Ad>(ads).get(0);
@@ -150,14 +154,14 @@ public class AdsDao {
         while (cursor.hasNext()) {
 
             DBObject adObj = cursor.next();
-            String keywords_str = (String)adObj.get(KEYWORDS);
+            String keywords_str = (String) adObj.get(KEYWORDS);
 
             if (keywords_str.contains(keyword)) {
-                Long adId = (Long)(adObj.get(AD_ID));
-                Long campaignId = (Long)adObj.get(CAMPAIGN_ID);
+                Long adId = (Long) (adObj.get(AD_ID));
+                Long campaignId = (Long) adObj.get(CAMPAIGN_ID);
                 String[] keywords = keywords_str.split(" ");
-                Double bid = (Double)adObj.get(BID);
-                Double pClick = (Double)adObj.get(PCLICK);
+                Double bid = (Double) adObj.get(BID);
+                Double pClick = (Double) adObj.get(PCLICK);
 
                 Ad ad = new Ad();
                 ad.setAdId(adId);
@@ -199,7 +203,7 @@ public class AdsDao {
     }
 
     private void setAdToMongo(Ad ad) {
-        try{
+        try {
             DBCollection collection = getAdsCollection();
             StringBuilder strKeyword = new StringBuilder();
             for (String keyword : ad.getKeywords()) {
@@ -213,8 +217,8 @@ public class AdsDao {
 
             collection.insert(doc);
             System.out.println("One Ad is inserted successfully");
-        }catch(Exception e){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
 
