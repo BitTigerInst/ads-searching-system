@@ -34,5 +34,13 @@
  {
    "campaignId": 74,
    "budget": 400000
- }
+ },
+  {
+    "campaignId": 75,
+    "budget": 600000
+  },
+  {
+    "campaignId": 76,
+    "budget": 500000
+  }
 ]
