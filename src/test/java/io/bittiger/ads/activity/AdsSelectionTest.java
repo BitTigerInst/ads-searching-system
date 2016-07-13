@@ -14,9 +14,9 @@ public class AdsSelectionTest {
     @Test
     public void testAdsSelection() {
 
-        Ad ad1 = initAd(1, new String[]{"word1"});
-        Ad ad2 = initAd(2, new String[]{"word2"});
-        Ad ad3 = initAd(3, new String[]{"word1", "word2", "word3"});
+        Ad ad1 = initAd(1L, new String[]{"word1"});
+        Ad ad2 = initAd(2L, new String[]{"word2"});
+        Ad ad3 = initAd(3L, new String[]{"word1", "word2", "word3"});
 
         double expectedRelevantScore1 = 0.333;
         double expectedRelevantScore2 = 1;

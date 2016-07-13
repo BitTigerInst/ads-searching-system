@@ -13,9 +13,9 @@ public class AdsDaoTest {
     @Test
     public void testAds() {
 
-        long expectedAdId = 1l;
-        long expectedCampaignId = 2l;
-        long expectedBid = 3l;
+        long expectedAdId = 1L;
+        long expectedCampaignId = 2L;
+        long expectedBid = 3L;
         String[] keywords = {"key1"};
 
         Ad ad = new Ad();

@@ -16,22 +16,22 @@ public class AdsAllocationTest {
     public void testAdsAllocation() {
         List<Ad> ads = new ArrayList<Ad>();
 
-        ads.add(initAd(1l, 2400));
-        ads.add(initAd(2l, 2358));
-        ads.add(initAd(3l, 2300));
-        ads.add(initAd(4l, 2200));
-        ads.add(initAd(5l, 2100));
-        ads.add(initAd(6l, 2000));
-        ads.add(initAd(7l, 1800));
-        ads.add(initAd(8l, 1600));
-        ads.add(initAd(9l, 1200));
-        ads.add(initAd(10l, 1000));
-        ads.add(initAd(11l, 800));
-        ads.add(initAd(12l, 600));
-        ads.add(initAd(13l, 500));
-        ads.add(initAd(14l, 400));
-        ads.add(initAd(15l, 300));
-        ads.add(initAd(16l, 200));
+        ads.add(initAd(1L, 2400));
+        ads.add(initAd(2L, 2358));
+        ads.add(initAd(3L, 2300));
+        ads.add(initAd(4L, 2200));
+        ads.add(initAd(5L, 2100));
+        ads.add(initAd(6L, 2000));
+        ads.add(initAd(7L, 1800));
+        ads.add(initAd(8L, 1600));
+        ads.add(initAd(9L, 1200));
+        ads.add(initAd(10L, 1000));
+        ads.add(initAd(11L, 800));
+        ads.add(initAd(12L, 600));
+        ads.add(initAd(13L, 500));
+        ads.add(initAd(14L, 400));
+        ads.add(initAd(15L, 300));
+        ads.add(initAd(16L, 200));
 
         List<Ad> res1 = AdsAllocation.getInstance().allocateAds(ads, "MAINLINE");
 

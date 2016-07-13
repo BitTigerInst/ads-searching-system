@@ -17,8 +17,8 @@ public class AdsPricingTest {
         double expectedFirstCPC  = 642.8671428571429;
         double expectedSecondCPC = 600;
 
-        Ad first = initAd(1l, 800, 2.8);
-        Ad second = initAd(2l, 600, 3);
+        Ad first = initAd(1L, 800, 2.8);
+        Ad second = initAd(2L, 600, 3);
 
         ads.add(first);
         ads.add(second);
