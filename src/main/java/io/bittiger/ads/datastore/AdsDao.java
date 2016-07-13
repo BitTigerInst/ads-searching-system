@@ -1,4 +1,4 @@
-package io.bittiger.ads.activity;
+package io.bittiger.ads.datastore;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;

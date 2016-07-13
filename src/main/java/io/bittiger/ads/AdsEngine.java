@@ -2,7 +2,7 @@ package io.bittiger.ads;
 
 import io.bittiger.ads.activity.AdsAllocation;
 import io.bittiger.ads.activity.AdsCampaignManager;
-import io.bittiger.ads.activity.AdsDao;
+import io.bittiger.ads.datastore.AdsDao;
 import io.bittiger.ads.activity.AdsFilter;
 import io.bittiger.ads.activity.AdsPricing;
 import io.bittiger.ads.activity.AdsRanking;

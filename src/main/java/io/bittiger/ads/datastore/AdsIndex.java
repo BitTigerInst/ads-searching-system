@@ -1,6 +1,5 @@
 package io.bittiger.ads.datastore;
 
-import io.bittiger.ads.activity.AdsDao;
 import io.bittiger.ads.util.Ad;
 import io.bittiger.ads.util.Campaign;
 import net.spy.memcached.MemcachedClient;

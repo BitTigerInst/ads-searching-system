@@ -1,5 +1,6 @@
 package io.bittiger.ads.activity;
 
+import io.bittiger.ads.datastore.AdsDao;
 import io.bittiger.ads.util.Ad;
 import io.bittiger.ads.util.Campaign;
 import org.junit.Test;
