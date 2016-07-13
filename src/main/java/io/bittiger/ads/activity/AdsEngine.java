@@ -1,14 +1,6 @@
-package io.bittiger.ads;
+package io.bittiger.ads.activity;
 
-import io.bittiger.ads.activity.AdsAllocation;
-import io.bittiger.ads.activity.AdsCampaignManager;
 import io.bittiger.ads.datastore.AdsDao;
-import io.bittiger.ads.activity.AdsFilter;
-import io.bittiger.ads.activity.AdsPricing;
-import io.bittiger.ads.activity.AdsRanking;
-import io.bittiger.ads.activity.AdsSelection;
-import io.bittiger.ads.activity.QueryUnderstanding;
-import io.bittiger.ads.activity.TopKAds;
 import io.bittiger.ads.datastore.AdsIndex;
 import io.bittiger.ads.util.Ad;
 import io.bittiger.ads.util.AllocationType;
@@ -19,10 +11,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 import static io.bittiger.ads.util.Config.*;
-import static io.bittiger.ads.util.Config.PCLICK;
 
 public class AdsEngine {
 
@@ -97,55 +87,37 @@ public class AdsEngine {
         return result;
     }
 
-    public static void main (String[] args) throws IOException {
+    public void selectAds(String query) {
 
-        AdsEngine adsEngine = new AdsEngine();
-        adsEngine.init();
+        String[] keywords = QueryUnderstanding.getInstance().parseQuery(query);
 
-        Scanner scan = new Scanner(System.in);
+        List<Ad> matchedAds = AdsSelection.getInstance().getMatchedAds(keywords);
 
-        System.out.println("Please enter your query (Enter Q to exit):");
-        String query = scan.nextLine();
+        List<Ad> filteredAds = AdsFilter.getInstance().filterAds(matchedAds);
 
-        while (!query.equals("Q")) {
+        List<Ad> rankedAds = AdsRanking.getInstance().rankAds(filteredAds);
 
-            String[] keywords = QueryUnderstanding.getInstance().parseQuery(query);
+        List<Ad> selectedSortedAds = TopKAds.getInstance().selectTopKAds(rankedAds);
 
-            List<Ad> matchedAds = AdsSelection.getInstance().getMatchedAds(keywords);
+        List<Ad> pricedAds = AdsPricing.getInstance().processPricing(selectedSortedAds);
 
-            List<Ad> filteredAds = AdsFilter.getInstance().filterAds(matchedAds);
+        List<Ad> dedupedAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(pricedAds);
 
-            List<Ad> rankedAds = AdsRanking.getInstance().rankAds(filteredAds);
+        List<Ad> appliedBudgetAds = AdsCampaignManager.getInstance().applyBudget(dedupedAds);
 
-            List<Ad> selectedSortedAds = TopKAds.getInstance().selectTopKAds(rankedAds);
+        List<Ad> mainlineAds = AdsAllocation.getInstance().allocateAds(appliedBudgetAds, AllocationType.MAINLINE.name());
 
-            List<Ad> pricedAds = AdsPricing.getInstance().processPricing(selectedSortedAds);
-
-            List<Ad> dedupedAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(pricedAds);
-
-            List<Ad> appliedBudgetAds = AdsCampaignManager.getInstance().applyBudget(dedupedAds);
-
-            List<Ad> mainlineAds = AdsAllocation.getInstance().allocateAds(appliedBudgetAds, AllocationType.MAINLINE.name());
-
-            List<Ad> sidebarAds = AdsAllocation.getInstance().allocateAds(appliedBudgetAds, AllocationType.SIDEBAR.name());
+        List<Ad> sidebarAds = AdsAllocation.getInstance().allocateAds(appliedBudgetAds, AllocationType.SIDEBAR.name());
 
 
-            for (Ad mainlineAd : mainlineAds) {
-                System.out.println(mainlineAd.getAdId());
-            }
-
-            System.out.println("===============");
-
-            for (Ad sidebar : sidebarAds) {
-                System.out.println(sidebar.getAdId());
-            }
-
-            System.out.println("Please enter your query (Enter Q to exit):");
-            query = scan.nextLine();
+        for (Ad mainlineAd : mainlineAds) {
+            System.out.println(mainlineAd.getAdId());
         }
 
-        System.out.println("See you!");
+        System.out.println("===============");
 
-        AdsIndex.getInstance().shutdown();
+        for (Ad sidebar : sidebarAds) {
+            System.out.println(sidebar.getAdId());
+        }
     }
 }

@@ -1,9 +1,10 @@
 package io.bittiger.ads.web;
 
 import com.google.gson.Gson;
-import io.bittiger.ads.AdsEngine;
+import io.bittiger.ads.activity.AdsEngine;
 import io.bittiger.ads.activity.*;
 import io.bittiger.ads.datastore.AdsDao;
+import io.bittiger.ads.datastore.AdsIndex;
 import io.bittiger.ads.util.Ad;
 import io.bittiger.ads.util.AllocationType;
 import org.json.JSONArray;
@@ -196,6 +197,7 @@ public class SearchResult extends HttpServlet {
 
     }
     public void destroy() {
+        AdsIndex.getInstance().shutdown();
         AdsDao.getInstance().shutdown();
     }
 }
