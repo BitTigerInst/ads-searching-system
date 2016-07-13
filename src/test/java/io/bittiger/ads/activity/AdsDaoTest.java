@@ -16,7 +16,7 @@ public class AdsDaoTest {
         long expectedAdId = 1L;
         long expectedCampaignId = 2L;
         long expectedBid = 3L;
-        String[] keywords = {"key1"};
+        String[] keywords = {"word1"};
 
         Ad ad = new Ad();
         ad.setAdId(expectedAdId);
@@ -27,7 +27,7 @@ public class AdsDaoTest {
         AdsDao.getInstance().setAdToMongo(ad);
 
         Ad res = AdsDao.getInstance().getAdFromMongo(expectedAdId);
-        Set<Ad> adSet = AdsDao.getInstance().traverseAds("key1");
+        Set<Ad> adSet = AdsDao.getInstance().traverseAds("word1");
         String[] currKeywords = res.getKeywords();
         boolean hasAd = false;
         for (Ad tmp : adSet) {

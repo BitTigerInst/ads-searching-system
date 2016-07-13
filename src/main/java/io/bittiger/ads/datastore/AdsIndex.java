@@ -29,7 +29,7 @@ public class AdsIndex {
 
     private static MemcachedClient cache = null;
 
-    public MemcachedClient getCache() throws IOException {
+    private MemcachedClient getCache() throws IOException {
         if (cache == null) {
             cache = new MemcachedClient(new InetSocketAddress(MEMCACHED_HOST_NAME, MEMCACHED_PORT));
         }
@@ -45,17 +45,23 @@ public class AdsIndex {
      * Inverted Index
      ******/
     public Set<Ad> getInvertedIndex(String keyword) {
-        Set<Ad> curr = getInvertedIndexFromCache(keyword);
-        if (curr == null) {
+        Set<Ad> curr = new HashSet<Ad>();
+        Set<Long> index = getInvertedIndexFromCache(keyword);
+
+        if (index == null) {
             curr = AdsDao.getInstance().traverseAds(keyword);
+        } else {
+            for (Long adId : index) {
+                curr.add(getAd(adId));
+            }
         }
         return curr;
     }
 
-    private Set<Ad> getInvertedIndexFromCache(String keyword) {
+    private Set<Long> getInvertedIndexFromCache(String keyword) {
         try {
             String invKey = "inv" + keyword;
-            return (Set<Ad>) getCache().get(invKey);
+            return (Set<Long>) getCache().get(invKey);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -70,6 +76,7 @@ public class AdsIndex {
             Ad ad = (Ad)getCache().get("fwd" + Long.toString(key));
             if (ad == null) {
                 ad = AdsDao.getInstance().getAdFromMongo(key);
+                getCache().set("fwd" + Long.toString(key), MEMCACHED_EXPIRATION_TIME, ad);
             }
             return ad;
         } catch (IOException e) {
@@ -85,15 +92,15 @@ public class AdsIndex {
             for (String keyword : keywords) {
 
                 String invKey = "inv" + keyword;
-                Set<Ad> ads = (Set<Ad>) getCache().get(invKey);
+                Set<Long> invertedIndex = (Set<Long>) getCache().get(invKey);
 
-                if (ads != null) {
-                    addOneAdIntoInvertedIndex(ads, ad);
-                    getCache().replace(invKey, MEMCACHED_EXPIRATION_TIME, ads);
+                if (invertedIndex != null) {
+                    addOneAdIntoInvertedIndex(invertedIndex, ad.getAdId());
+                    getCache().replace(invKey, MEMCACHED_EXPIRATION_TIME, invertedIndex);
                 } else {
-                    ads = new HashSet<Ad>();
-                    ads.add(ad);
-                    getCache().set(invKey, MEMCACHED_EXPIRATION_TIME, ads);
+                    invertedIndex = new HashSet<Long>();
+                    invertedIndex.add(ad.getAdId());
+                    getCache().set(invKey, MEMCACHED_EXPIRATION_TIME, invertedIndex);
                 }
             }
             return true;
@@ -103,14 +110,10 @@ public class AdsIndex {
         }
     }
 
-    private void addOneAdIntoInvertedIndex(Set<Ad> ads, Ad newAd) {
-        long newId = newAd.getAdId();
-        for (Ad ad : ads) {
-            if (ad.getAdId() == newId) {
-                return;
-            }
+    private void addOneAdIntoInvertedIndex(Set<Long> invertedIndex, long newAdId) {
+        if (!invertedIndex.contains(newAdId)) {
+            invertedIndex.add(newAdId);
         }
-        ads.add(newAd);
     }
 
     private boolean setCampaignToCache(Campaign campaign) {

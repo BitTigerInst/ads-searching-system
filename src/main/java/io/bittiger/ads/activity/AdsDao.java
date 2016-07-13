@@ -6,6 +6,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import io.bittiger.ads.util.Ad;
 import io.bittiger.ads.util.Campaign;
 
@@ -139,7 +140,14 @@ public class AdsDao {
                     append(BID, ad.getBid()).
                     append(PCLICK, ad.getpClick());
 
-            collection.insert(doc);
+            DBCursor cursor = collection.find(doc);
+            if (cursor.hasNext()) {
+                BasicDBObject existing = new BasicDBObject(AD_ID, ad.getAdId());
+                collection.remove(existing);
+            }
+
+            WriteResult writeResult = collection.insert(doc);
+            System.out.println(writeResult.wasAcknowledged());
             System.out.println("One Ad is inserted successfully");
             return true;
         } catch (Exception e) {
