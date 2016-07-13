@@ -35,7 +35,7 @@ public class AdsFilterTest {
         List<Ad> res = AdsFilter.getInstance().filterAds(ads);
         
         assertNotNull(res);
-        assertEquals(8, res.size());
+        assertEquals(9, res.size());
         assertEquals(12l, res.get(res.size() - 1).getAdId());
         assertTrue(res.get(res.size() - 1).getRelevantScore() > 0.3);
     }

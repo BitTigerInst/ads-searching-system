@@ -36,7 +36,7 @@ public class AdsAllocationTest {
         List<Ad> res1 = AdsAllocation.getInstance().allocateAds(ads, "MAINLINE");
 
         assertNotNull(res1);
-        assertEquals(9, res1.size());
+        assertEquals(11, res1.size());
         assertTrue(res1.get(5).getCostPerClick() >= 1200);
 
         List<Ad> res2 = AdsAllocation.getInstance().allocateAds(ads, "SIDEBAR");

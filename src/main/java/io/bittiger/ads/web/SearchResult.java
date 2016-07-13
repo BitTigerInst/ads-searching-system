@@ -1,6 +1,7 @@
 package io.bittiger.ads.web;
 
 import com.google.gson.Gson;
+import io.bittiger.ads.AdsEngine;
 import io.bittiger.ads.activity.*;
 import io.bittiger.ads.util.Ad;
 import io.bittiger.ads.util.AllocationType;
@@ -27,7 +28,7 @@ public class SearchResult extends HttpServlet {
     /*load data into MongoDB*/
     public void init() throws ServletException {
         try {
-          AdsDao.getInstance().loadLogfile();
+          new AdsEngine().init();
         } catch (IOException e) {
             e.printStackTrace();
         }
