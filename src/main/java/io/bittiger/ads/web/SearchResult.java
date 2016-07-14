@@ -78,9 +78,7 @@ public class SearchResult extends HttpServlet {
         }
         System.out.println("pricing Ads!~~~~~~~~~"+pricedAds);
         List<Ad> mainlineAds = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.MAINLINE.name());
-
         List<Ad> sidebarAds = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.SIDEBAR.name());
-
         if (mainlineAds == null && sidebarAds == null) {
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
