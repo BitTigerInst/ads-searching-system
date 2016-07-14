@@ -19,16 +19,16 @@ public class TopKAdsTest {
         double rankScore3 = 1.2;
 
         Ad ad1 = new Ad();
-        ad1.setAdId(1);
+        ad1.setAdId(1L);
         ad1.setRankScore(rankScore1);
 
         Ad ad2 = new Ad();
-        ad2.setAdId(2);
+        ad2.setAdId(2L);
         ad2.setRankScore(rankScore2);
 
 
         Ad ad3 = new Ad();
-        ad3.setAdId(3);
+        ad3.setAdId(3L);
         ad3.setRankScore(rankScore3);
 
         List<Ad> rankedAds= new ArrayList<Ad>();

@@ -19,10 +19,14 @@ public class Config {
 
     public static final String ADS_COLLECTION = "adsCollection";
 
+    public static final String CAMPAIGNS_COLLECTION = "campaignsCollection";
+
     // Data resource settings
     public static final String USER_DIR = "user.dir";
 
     public static final String ADS_LOCATION = "/src/main/resources/ads.json";
+
+    public static final String CAMPAIGNS_LOCATION = "/src/main/resources/campaign.json";
 
     public static final String AD_ID = "adId";
 
@@ -38,6 +42,8 @@ public class Config {
 
     public static final String QUALITYSCORE = "qualityScore";
 
+    public static final String BUDGET = "budget";
+
     // Workflow settings
     public static final int TOP_K_ADS = 5;
 
@@ -45,9 +51,9 @@ public class Config {
 
     public static final double MIN_PCLICK = 0.1;
 
-    public static final double MIN_RESERVE_PRICE = 500;
+    public static final double MIN_RESERVE_PRICE = 300;
 
-    public static final double MAINLINE_RESERVE_PRICE = 1200;
+    public static final double MAINLINE_RESERVE_PRICE = 700;
 
 
 }

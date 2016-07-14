@@ -1,6 +1,8 @@
 package io.bittiger.ads.activity;
 
+import io.bittiger.ads.datastore.AdsDao;
 import io.bittiger.ads.util.Ad;
+import io.bittiger.ads.util.Campaign;
 import org.junit.Test;
 import java.lang.String;
 import java.util.Set;
@@ -10,12 +12,12 @@ import static org.junit.Assert.assertEquals;
 public class AdsDaoTest {
 
     @Test
-    public void testAdsDao() {
+    public void testAds() {
 
-        long expectedAdId = 1l;
-        long expectedCampaignId = 2l;
-        long expectedBid = 3l;
-        String[] keywords = {"key1"};
+        long expectedAdId = 1L;
+        long expectedCampaignId = 2L;
+        long expectedBid = 3L;
+        String[] keywords = {"word1"};
 
         Ad ad = new Ad();
         ad.setAdId(expectedAdId);
@@ -23,10 +25,10 @@ public class AdsDaoTest {
         ad.setBid(expectedBid);
         ad.setKeywords(keywords);
 
-        AdsDao.getInstance().setAd(ad);
+        AdsDao.getInstance().setAdToMongo(ad);
 
-        Ad res = AdsDao.getInstance().getAd(expectedAdId);
-        Set<Ad> adSet = AdsDao.getInstance().getAds("invkey1");
+        Ad res = AdsDao.getInstance().getAdFromMongo(expectedAdId);
+        Set<Ad> adSet = AdsDao.getInstance().traverseAds("word1");
         String[] currKeywords = res.getKeywords();
         boolean hasAd = false;
         for (Ad tmp : adSet) {
@@ -41,4 +43,21 @@ public class AdsDaoTest {
         assertEquals(expectedCampaignId, res.getCampaignId(), 0.001);
         assertEquals(hasAd, true);
     }
+
+    @Test
+    public void testCampaign() {
+        long expectedCampaignId = 66L;
+        double expectedBudget = 10000;
+
+        Campaign campaign = new Campaign();
+        campaign.setCampaignId(expectedCampaignId);
+        campaign.setBudget(expectedBudget);
+        AdsDao.getInstance().setCampaign(campaign);
+
+        Campaign actualCampaign = AdsDao.getInstance().getCampaign(expectedCampaignId);
+
+        assertEquals(expectedCampaignId, actualCampaign.getCampaignId());
+        assertEquals(expectedBudget, actualCampaign.getBudget(), 0.001);
+    }
+
 }

@@ -14,19 +14,19 @@ public class AdsRankingTest {
     @Test
     public void testRankAds() {
         Ad ad1 = new Ad();
-        ad1.setAdId(1);
+        ad1.setAdId(1L);
         ad1.setpClick(0.3);
         ad1.setRelevantScore(0.2);
         ad1.setBid(3);
 
         Ad ad2 = new Ad();
-        ad2.setAdId(2);
+        ad2.setAdId(2L);
         ad2.setpClick(0.2);
         ad2.setRelevantScore(0.6);
         //   ad2.setBid(2);
 
         Ad ad3 = new Ad();
-        ad3.setAdId(3);
+        ad3.setAdId(3L);
         ad3.setpClick(0.5);
         ad3.setRelevantScore(0.1);
         ad3.setBid(5);

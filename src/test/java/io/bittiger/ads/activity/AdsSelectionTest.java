@@ -1,5 +1,6 @@
 package io.bittiger.ads.activity;
 
+import io.bittiger.ads.datastore.AdsIndex;
 import io.bittiger.ads.util.Ad;
 import org.junit.Test;
 
@@ -13,17 +14,17 @@ public class AdsSelectionTest {
     @Test
     public void testAdsSelection() {
 
-        Ad ad1 = initAd(1, new String[]{"word1"});
-        Ad ad2 = initAd(2, new String[]{"word2"});
-        Ad ad3 = initAd(3, new String[]{"word1", "word2", "word3"});
+        Ad ad1 = initAd(1L, new String[]{"word1"});
+        Ad ad2 = initAd(2L, new String[]{"word2"});
+        Ad ad3 = initAd(3L, new String[]{"word1", "word2", "word3"});
 
         double expectedRelevantScore1 = 0.333;
         double expectedRelevantScore2 = 1;
         double expectedRelevantScore3 = 0.666;
 
-        AdsDao.getInstance().setAd(ad1);
-        AdsDao.getInstance().setAd(ad2);
-        AdsDao.getInstance().setAd(ad3);
+        AdsIndex.getInstance().setAdToCache(ad1);
+        AdsIndex.getInstance().setAdToCache(ad2);
+        AdsIndex.getInstance().setAdToCache(ad3);
 
         List<Ad> res1 = AdsSelection.getInstance().getMatchedAds(new String[]{"word1"});
         assertNotNull(res1);
