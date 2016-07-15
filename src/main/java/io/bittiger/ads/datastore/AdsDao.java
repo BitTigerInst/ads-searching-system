@@ -189,11 +189,11 @@ public class AdsDao {
         try {
             DBCollection collection = getCampaignsCollection();
 
-            BasicDBObject camp = new BasicDBObject(CAMPAIGN_ID, campaign.getCampaignId());
+            BasicDBObject existing = new BasicDBObject(CAMPAIGN_ID, campaign.getCampaignId());
 
-            DBCursor cursor = collection.find(camp);
+            DBCursor cursor = collection.find(existing);
             if (cursor.hasNext()) {
-                BasicDBObject existing = new BasicDBObject(CAMPAIGN_ID, campaign.getCampaignId());
+                existing = new BasicDBObject(CAMPAIGN_ID, campaign.getCampaignId());
                 collection.remove(existing);
             }
 
