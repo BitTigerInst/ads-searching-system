@@ -77,10 +77,37 @@ public class SearchResult extends HttpServlet {
             pricedAds = AdsPricing.getInstance().processPricing(selectedSortedAds);
         }
         System.out.println("pricing Ads!~~~~~~~~~"+pricedAds);
-        List<Ad> mainlineAds = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.MAINLINE.name());
-
-        List<Ad> sidebarAds = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.SIDEBAR.name());
-
+        List<Ad> mainlineAdsCandidates = null;
+        if (pricedAds != null) {
+            mainlineAdsCandidates = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.MAINLINE.name());
+        }
+        System.out.println("mainline candidates!~~~~~~~"+mainlineAdsCandidates);
+        List<Ad> dedupedMainlineAds = null;
+        if (mainlineAdsCandidates != null) {
+            dedupedMainlineAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(mainlineAdsCandidates);
+        }
+        System.out.println("mainline deduped Ads~~~~~~~~"+dedupedMainlineAds);
+        List<Ad> mainlineAds = null;
+        if (dedupedMainlineAds != null) {
+         mainlineAds = AdsCampaignManager.getInstance().applyBudget(dedupedMainlineAds);
+        }
+        System.out.println("mainlineAds~~~~~~~~~~~~~"+mainlineAds);
+        System.out.println("***********************************************");
+        List<Ad> sidebarAdsCandidates = null;
+        if (pricedAds != null) {
+            sidebarAdsCandidates = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.SIDEBAR.name());
+        }
+        System.out.println("sidebar candidates~~~~~~"+sidebarAdsCandidates);
+        List<Ad> dedupedSidebarAds = null;
+        if (sidebarAdsCandidates != null) {
+            dedupedSidebarAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(sidebarAdsCandidates);
+        }
+        System.out.println("sidebar deduped Ads~~~~~~~~~"+dedupedSidebarAds);
+        List<Ad> sidebarAds = null;
+        if (dedupedSidebarAds != null) {
+            sidebarAds = AdsCampaignManager.getInstance().applyBudget(dedupedSidebarAds);
+        }
+        System.out.println("sidebarAds~~~~~~~~"+sidebarAds);
         if (mainlineAds == null && sidebarAds == null) {
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
