@@ -20,12 +20,12 @@ Lucene, Memcached, MongoDB, AngularJS+Bootstrap, Tomcat, JUnit, IntelliJ
 
 ## How to run ads searching system
 __Step1. Install MongoDB, Memcached, and Tomcat__
-1. Install mongodb, memcached, and tomcat by homebrew
+1. Install mongodb, memcached, and tomcat by [homebrew](http://brew.sh)
 2. Start mongodb server: `mongod --config /usr/local/etc/mongod.conf`
 3. Start memcached server: `memcached`
 
 __Step2. Get source code from Github and run ads-searching-system server__
-1. Clone the project from github: ` $ git clone https://github.com/BitTigerInst/ads-searching-system.git `
+1. Clone the project from github: `git clone https://github.com/BitTigerInst/ads-searching-system.git`
 2. Go to project folder and run `mvn clean install`
 3. Setup and run the ads server
 
