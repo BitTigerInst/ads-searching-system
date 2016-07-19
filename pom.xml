@@ -7,7 +7,6 @@
     <groupId>io.bittiger</groupId>
     <artifactId>ads-searching-system</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
 
     <properties>
         <junit.version>4.12</junit.version>
