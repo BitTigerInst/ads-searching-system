@@ -23,10 +23,6 @@ import java.util.List;
 
 import static io.bittiger.ads.util.Config.*;
 
-//@WebServlet(
-//        name = "SearchResult",
-//        urlPatterns = {"/search"}
-//)
 @WebServlet(urlPatterns = "/search")
 public class SearchResult extends HttpServlet {
     private static final long serialVersionUID = 1L;
