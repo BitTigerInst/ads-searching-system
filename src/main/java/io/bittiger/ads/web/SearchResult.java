@@ -1,7 +1,10 @@
 package io.bittiger.ads.web;
 
 import com.google.gson.Gson;
+import io.bittiger.ads.activity.AdsEngine;
 import io.bittiger.ads.activity.*;
+import io.bittiger.ads.datastore.AdsDao;
+import io.bittiger.ads.datastore.AdsIndex;
 import io.bittiger.ads.util.Ad;
 import io.bittiger.ads.util.AllocationType;
 import org.json.JSONArray;
@@ -24,14 +27,15 @@ import static io.bittiger.ads.util.Config.*;
 public class SearchResult extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-public void init() throws ServletException {
-    try {
-        AdsDao.getInstance().loadLogfile();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
+    /*load data into MongoDB*/
+    public void init() throws ServletException {
+        try {
+          new AdsEngine().init();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+}
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -73,10 +77,37 @@ public void init() throws ServletException {
             pricedAds = AdsPricing.getInstance().processPricing(selectedSortedAds);
         }
         System.out.println("pricing Ads!~~~~~~~~~"+pricedAds);
-        List<Ad> mainlineAds = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.MAINLINE.name());
-
-        List<Ad> sidebarAds = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.SIDEBAR.name());
-
+        List<Ad> mainlineAdsCandidates = null;
+        if (pricedAds != null) {
+            mainlineAdsCandidates = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.MAINLINE.name());
+        }
+        System.out.println("mainline candidates!~~~~~~~"+mainlineAdsCandidates);
+        List<Ad> dedupedMainlineAds = null;
+        if (mainlineAdsCandidates != null) {
+            dedupedMainlineAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(mainlineAdsCandidates);
+        }
+        System.out.println("mainline deduped Ads~~~~~~~~"+dedupedMainlineAds);
+        List<Ad> mainlineAds = null;
+        if (dedupedMainlineAds != null) {
+         mainlineAds = AdsCampaignManager.getInstance().applyBudget(dedupedMainlineAds);
+        }
+        System.out.println("mainlineAds~~~~~~~~~~~~~"+mainlineAds);
+        System.out.println("***********************************************");
+        List<Ad> sidebarAdsCandidates = null;
+        if (pricedAds != null) {
+            sidebarAdsCandidates = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.SIDEBAR.name());
+        }
+        System.out.println("sidebar candidates~~~~~~"+sidebarAdsCandidates);
+        List<Ad> dedupedSidebarAds = null;
+        if (sidebarAdsCandidates != null) {
+            dedupedSidebarAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(sidebarAdsCandidates);
+        }
+        System.out.println("sidebar deduped Ads~~~~~~~~~"+dedupedSidebarAds);
+        List<Ad> sidebarAds = null;
+        if (dedupedSidebarAds != null) {
+            sidebarAds = AdsCampaignManager.getInstance().applyBudget(dedupedSidebarAds);
+        }
+        System.out.println("sidebarAds~~~~~~~~"+sidebarAds);
         if (mainlineAds == null && sidebarAds == null) {
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
@@ -123,11 +154,17 @@ public void init() throws ServletException {
                     out.write("Keywords: "+ key.toString()+"\n");
                     String bid = String.valueOf(main.getLong(BID));
                     out.write("Bid: "+ bid +"\n");
-                    String relevantScore = String.valueOf(main.getDouble("relevantScore"));
+                    double value = main.getDouble(RELEVANTSCORE);
+                    int whole = (int) value;
+                    int fract = (int) ((value - whole) * 100);
+                    String relevantScore = String.valueOf(whole + "." + fract);
                     out.write("Relevant Score: "+ relevantScore +"\n");
                     String pclick = String.valueOf(main.getDouble("pClick"));
                     out.write("pclick: "+ pclick +"\n");
-                    String qualityScore = String.valueOf(main.getDouble("qualityScore"));
+                    double qualityValue = main.getDouble(QUALITYSCORE);
+                    int qualityWhole = (int) qualityValue;
+                    int qualityFract = (int) ((qualityValue - qualityWhole) * 100);
+                    String qualityScore = String.valueOf(qualityWhole + "." + qualityFract);
                     out.write("Quality Score:"+ qualityScore +"\n");
                     String costPerClick = String.valueOf(main.getLong("costPerClick"));
                     out.write("Cost per Click: "+ costPerClick +"\n");
@@ -160,11 +197,17 @@ public void init() throws ServletException {
                     out.write("Keywords: "+ key.toString()+"\n");
                     String bid = String.valueOf(side.getLong(BID));
                     out.write("Bid: "+ bid +"\n");
-                    String relevantScore = String.valueOf(side.getDouble("relevantScore"));
+                    double value = side.getDouble(RELEVANTSCORE);
+                    int whole = (int) value;
+                    int fract = (int) ((value - whole) * 100);
+                    String relevantScore = String.valueOf(whole + "." + fract);
                     out.write("Relevant Score: "+ relevantScore +"\n");
                     String pclick = String.valueOf(side.getDouble("pClick"));
                     out.write("pclick: "+ pclick +"\n");
-                    String qualityScore = String.valueOf(side.getDouble("qualityScore"));
+                    double qualityValue = side.getDouble(QUALITYSCORE);
+                    int qualityWhole = (int) qualityValue;
+                    int qualityFract = (int) ((qualityValue - qualityWhole) * 100);
+                    String qualityScore = String.valueOf(qualityWhole + "." + qualityFract);
                     out.write("Quality Score:"+ qualityScore +"\n");
                     String costPerClick = String.valueOf(side.getLong("costPerClick"));
                     out.write("Cost per Click: "+ costPerClick +"\n");
@@ -181,6 +224,7 @@ public void init() throws ServletException {
 
     }
     public void destroy() {
+        AdsIndex.getInstance().shutdown();
         AdsDao.getInstance().shutdown();
     }
 }

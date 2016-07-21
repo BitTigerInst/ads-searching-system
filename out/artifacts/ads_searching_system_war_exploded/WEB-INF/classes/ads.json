@@ -57,7 +57,7 @@
  },
  {
    "adId": 1239,
-   "campaignId": 68,
+   "campaignId": 69,
    "keywords": "clothes shoe",
    "bid": 550,
    "pclick": 1.1
@@ -71,21 +71,21 @@
  },
  {
    "adId": 1241,
-   "campaignId": 71,
-   "keywords": "resaurant america food",
+   "campaignId": 75,
+   "keywords": "restaurant american food",
    "bid": 500,
    "pclick": 0.6
  },
  {
    "adId": 1242,
    "campaignId": 71,
-   "keywords": "resaurant chinese food \"",
+   "keywords": "restaurant chinese food \"",
    "bid": 500,
    "pclick": 0.65
  },
  {
    "adId": 1243,
-   "campaignId": 73,
+   "campaignId": 76,
    "keywords": "cup coffee ",
    "bid": 1500,
    "pclick": 0.75

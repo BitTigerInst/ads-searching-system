@@ -1,15 +1,13 @@
 package io.bittiger.ads.activity;
 
+import io.bittiger.ads.datastore.AdsIndex;
 import io.bittiger.ads.util.Ad;
-import net.spy.memcached.MemcachedClient;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Arrays;
-import java.lang.String;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class AdsSelection {
     private static AdsSelection instance = null;
@@ -31,11 +29,9 @@ public class AdsSelection {
 
         Set<Ad> set = new HashSet<Ad>();
         for (String keyword : keywords) {
-            String invKey = "inv" + keyword;
-            Set<Ad> curr = (Set<Ad>) AdsDao.getInstance().getAds(invKey);
-            if (curr == null) {
-                curr = AdsDao.getInstance().traverseFwdIndex(keyword);
-            }
+
+            Set<Ad> curr = AdsIndex.getInstance().getInvertedIndex(keyword);
+
             addAds(set, curr, keywords);
         }
 
@@ -54,7 +50,8 @@ public class AdsSelection {
                 ++hit;
             }
         }
-        ad.setRelevantScore((double) hit / queries.length);
+        /*relevantScore = #matches/ #keywords in the Ad*/
+        ad.setRelevantScore((double) hit / ad.getKeywords().length);
     }
 
     private void addAds(Set<Ad> ads, Set<Ad> newAds, String[] queries) {
