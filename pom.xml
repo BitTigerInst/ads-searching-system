@@ -20,6 +20,9 @@
         <heroku.appName>ads-searching-system</heroku.appName>
         <heroku.version>1.0.3</heroku.version>
         <tomcat.version>8.0.28</tomcat.version>
+        <appassembler.version>1.1.1</appassembler.version>
+        <maven-war-plugin.version>2.6</maven-war-plugin.version>
+        <jetty-runner.version>8.1.16.v20140903</jetty-runner.version>
     </properties>
     <packaging>war</packaging>
     <build>
@@ -33,121 +36,45 @@
                 <!--</configuration>-->
             <!--</plugin>-->
 
-            <!--<plugin>-->
-                <!--<groupId>com.heroku.sdk</groupId>-->
-                <!--<artifactId>heroku-maven-plugin</artifactId>-->
-                <!--<version>${heroku.version}</version>-->
-                <!--<configuration>-->
-                    <!--<appName>${heroku.appName}</appName>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>appassembler-maven-plugin</artifactId>-->
-                <!--<version>1.1.1</version>-->
-                <!--<configuration>-->
-                    <!--<assembleDirectory>target</assembleDirectory>-->
-                    <!--<programs>-->
-                        <!--<program>-->
-                            <!--<mainClass>launch.Main</mainClass>-->
-                            <!--<name>webapp</name>-->
-                        <!--</program>-->
-                    <!--</programs>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>assemble</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--<version>2.3</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals><goal>copy</goal></goals>-->
-                        <!--<configuration>-->
-                            <!--<artifactItems>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.eclipse.jetty</groupId>-->
-                                    <!--<artifactId>jetty-runner</artifactId>-->
-                                    <!--<version>9.3.3.v20150827</version>-->
-                                    <!--<destFileName>jetty-runner.jar</destFileName>-->
-                                <!--</artifactItem>-->
-                            <!--</artifactItems>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-
+            <!--heroku deployment-->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.3</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>${appassembler.version}</version>
+                <configuration>
+                    <assembleDirectory>target</assembleDirectory>
+                    <programs>
+                        <program>
+                            <mainClass>Main</mainClass>
+                            <name>webapp</name>
+                        </program>
+                    </programs>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>copy</goal></goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.github.jsimone</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>7.0.57.2</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-war-plugin.version}</version>
             </plugin>
         </plugins>
 
     </build>
       <dependencies>
-
+          <!--jetty-->
           <dependency>
               <groupId>org.mortbay.jetty</groupId>
               <artifactId>jetty-runner</artifactId>
-              <version>8.1.16.v20140903</version>
+              <version>${jetty-runner.version}</version>
           </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat.embed</groupId>-->
-            <!--<artifactId>tomcat-embed-core</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat.embed</groupId>-->
-            <!--<artifactId>tomcat-embed-logging-juli</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat.embed</groupId>-->
-            <!--<artifactId>tomcat-embed-jasper</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat</groupId>-->
-            <!--<artifactId>tomcat-jasper</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat</groupId>-->
-            <!--<artifactId>tomcat-jasper-el</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat</groupId>-->
-            <!--<artifactId>tomcat-jsp-api</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
-        <!--</dependency>-->
+
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>

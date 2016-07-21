@@ -20,7 +20,7 @@
 
       $scope.inputQuery = function() {
         $http({
-          url : 'search',
+          url : '/search',
           method : "POST",
           data : {
             'query' : $scope.query
