@@ -24,7 +24,6 @@
         <maven-war-plugin.version>2.6</maven-war-plugin.version>
         <jetty-runner.version>8.1.16.v20140903</jetty-runner.version>
     </properties>
-    <packaging>war</packaging>
     <build>
         <plugins>
             <!--<plugin>-->
