@@ -185,12 +185,27 @@ public class AdsDao {
     }
 
     public boolean setCampaign(Campaign campaign) {
-        DBCollection collection = getCampaignsCollection();
+        /****** Add one single campaign to fwd index ******/
+        try {
+            DBCollection collection = getCampaignsCollection();
 
-        assert collection != null;
+            BasicDBObject existing = new BasicDBObject(CAMPAIGN_ID, campaign.getCampaignId());
 
-        BasicDBObject doc = new BasicDBObject(CAMPAIGN_ID, campaign.getCampaignId())
-                .append(BUDGET, campaign.getBudget());
-        return collection.insert(doc).wasAcknowledged();
+            DBCursor cursor = collection.find(existing);
+            if (cursor.hasNext()) {
+                existing = new BasicDBObject(CAMPAIGN_ID, campaign.getCampaignId());
+                collection.remove(existing);
+            }
+
+            BasicDBObject doc = new BasicDBObject(CAMPAIGN_ID, campaign.getCampaignId())
+                    .append(BUDGET, campaign.getBudget());
+            WriteResult writeResult = collection.insert(doc);
+            System.out.println(writeResult.wasAcknowledged());
+            System.out.println("One Campaign is inserted successfully");
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
     }
 }
