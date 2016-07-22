@@ -44,7 +44,7 @@ public class AdsCampaignManager {
             long campaignId = ad.getCampaignId();
             Campaign campaign = AdsIndex.getInstance().getCampaign(campaignId);
             double budget = campaign.getBudget();
-
+            System.out.println("budget~~"+budget);
             if (ad.getCostPerClick() <= budget && ad.getCostPerClick() >= MIN_RESERVE_PRICE) {
                 budget -= ad.getCostPerClick();
                 campaign.setBudget(budget);
