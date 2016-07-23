@@ -9,9 +9,7 @@ import java.net.InetSocketAddress;
 import java.util.HashSet;
 import java.util.Set;
 
-import static io.bittiger.ads.util.Config.MEMCACHED_EXPIRATION_TIME;
-import static io.bittiger.ads.util.Config.MEMCACHED_HOST_NAME;
-import static io.bittiger.ads.util.Config.MEMCACHED_PORT;
+import static io.bittiger.ads.util.Config.*;
 
 public class AdsIndex {
     private static AdsIndex instance = null;
@@ -30,7 +28,19 @@ public class AdsIndex {
 
     private MemcachedClient getCache() throws IOException {
         if (cache == null) {
-            cache = new MemcachedClient(new InetSocketAddress(MEMCACHED_HOST_NAME, MEMCACHED_PORT));
+            String env = System.getProperty(USER_DIR);
+            System.out.println("User dir: "+ env);
+            String hostname;
+            int port;
+
+            if (env.length() - env.lastIndexOf("/") > 21){
+                hostname = HEROKU_MEMCACHED_HOST_NAME;
+                port = HEROKU_MEMCACHED_PORT;
+            } else {
+                hostname = MEMCACHED_HOST_NAME;
+                port = MEMCACHED_PORT;
+            }
+            cache = new MemcachedClient(new InetSocketAddress(hostname, port));
         }
         return cache;
     }
