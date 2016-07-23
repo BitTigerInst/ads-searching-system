@@ -28,19 +28,7 @@ public class AdsIndex {
 
     private MemcachedClient getCache() throws IOException {
         if (cache == null) {
-            String env = System.getProperty(USER_DIR);
-            System.out.println("User dir: "+ env);
-            String hostname;
-            int port;
-
-            if (env.length() - env.lastIndexOf("/") > 21){
-                hostname = HEROKU_MEMCACHED_HOST_NAME;
-                port = HEROKU_MEMCACHED_PORT;
-            } else {
-                hostname = MEMCACHED_HOST_NAME;
-                port = MEMCACHED_PORT;
-            }
-            cache = new MemcachedClient(new InetSocketAddress(hostname, port));
+            cache = new MemcachedClient(new InetSocketAddress(HEROKU_MEMCACHED_HOST_NAME, HEROKU_MEMCACHED_PORT));
         }
         return cache;
     }
