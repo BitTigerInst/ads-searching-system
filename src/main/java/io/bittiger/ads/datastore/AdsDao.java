@@ -36,7 +36,8 @@ public class AdsDao {
             String env = System.getProperty(USER_DIR);
             String hostname;
 
-            if (env.length() - env.lastIndexOf("/") > 21){
+            // env.length() - env.lastIndexOf("/") > 21
+            if (env.contains("tmp")){
                 hostname = HEROKU_MONGODB_HOST_NAME;
             } else {
                 hostname = MONGODB_HOST_NAME;
