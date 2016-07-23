@@ -1,0 +1,46 @@
+[
+ {
+   "campaignId": 66,
+   "budget": 600000
+ },
+ {
+   "campaignId": 67,
+   "budget": 200000
+ },
+ {
+   "campaignId": 68,
+   "budget": 300000
+ },
+ {
+   "campaignId": 69,
+   "budget": 400000
+ },
+ {
+   "campaignId": 70,
+   "budget": 500000
+ },
+ {
+   "campaignId": 71,
+   "budget": 600000
+ },
+ {
+   "campaignId": 72,
+   "budget": 700000
+ },
+ {
+   "campaignId": 73,
+   "budget": 500000
+ },
+ {
+   "campaignId": 74,
+   "budget": 400000
+ },
+  {
+    "campaignId": 75,
+    "budget": 600000
+  },
+  {
+    "campaignId": 76,
+    "budget": 500000
+  }
+]
