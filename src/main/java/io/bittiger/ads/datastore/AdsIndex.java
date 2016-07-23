@@ -29,6 +29,7 @@ public class AdsIndex {
     private MemcachedClient getCache() throws IOException {
         if (cache == null) {
             String env = System.getProperty(USER_DIR);
+            System.out.println("User dir: "+ env);
             String hostname;
             int port;
 
