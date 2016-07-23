@@ -33,7 +33,8 @@ public class AdsIndex {
             String hostname;
             int port;
 
-            if (env.length() - env.lastIndexOf("/") > 21){
+            // env.length() - env.lastIndexOf("/") > 21
+            if (env.contains("tmp")){
                 hostname = HEROKU_MEMCACHED_HOST_NAME;
                 port = HEROKU_MEMCACHED_PORT;
             } else {
