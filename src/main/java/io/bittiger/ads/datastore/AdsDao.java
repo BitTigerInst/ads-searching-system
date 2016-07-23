@@ -33,7 +33,15 @@ public class AdsDao {
 
     private MongoClient getMongo() throws IOException {
         if (mongo == null) {
-            mongo = new MongoClient(MONGODB_HOST_NAME, MONGODB_PORT);
+            String env = System.getProperty(USER_DIR);
+            String hostname;
+
+            if (env.length() - env.lastIndexOf("/") > 21){
+                hostname = HEROKU_MONGODB_HOST_NAME;
+            } else {
+                hostname = MONGODB_HOST_NAME;
+            }
+            mongo = new MongoClient(hostname);
         }
         return mongo;
     }
