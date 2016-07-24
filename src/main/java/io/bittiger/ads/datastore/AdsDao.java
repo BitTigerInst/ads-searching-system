@@ -30,13 +30,12 @@ public class AdsDao {
 
     private MongoClient getMongo() throws IOException {
         if (mongoClientURI == null) {
-         //   mongo = new MongoClient(HEROKU_MONGODB_HOST_NAME);
-            mongoClientURI = new MongoClientURI(HEROKU_MONGODB_HOST_NAME+":"+HEROKU_MONGODB_PORT+"/"+ADS_DB);
-            System.out.println(mongoClientURI.toString());
-         //   mongoClientURI.getPassword();
-        //    MongoCredential credential = MongoCredential.createCredential(mongoClientURI.getUsername(), mongoClientURI.getDatabase(), mongoClientURI.getPassword());
-          //  mongoClient = new MongoClient(new ServerAddress(), Arrays.asList(credential));
-            mongoClient = new MongoClient(mongoClientURI);
+            if (System.getProperty(USER_DIR).equals("/app")) {
+                mongoClientURI = new MongoClientURI(HEROKU_MONGODB_HOST_NAME+":"+HEROKU_MONGODB_PORT+"/"+ADS_DB);
+                mongoClient = new MongoClient(mongoClientURI);
+            } else {
+                mongoClient = new MongoClient(MONGODB_HOST_NAME, MONGODB_PORT);
+            }
         }
         return mongoClient;
     }

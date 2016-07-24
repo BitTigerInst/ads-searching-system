@@ -33,42 +33,22 @@ public class AdsIndex {
     private static MemcachedClient cache = null;
 
     private MemcachedClient getCache() throws IOException {
-   //     /*
         if (cache == null) {
-            AuthDescriptor ad = new AuthDescriptor(new String[]{"PLAIN"},
-                    new PlainCallbackHandler(MEMCACHED_USERNAME, MEMCACHED_PASSWORD));
-            ConnectionFactoryBuilder factoryBuilder = new ConnectionFactoryBuilder();
-            ConnectionFactory cf = factoryBuilder.setProtocol(ConnectionFactoryBuilder.Protocol.BINARY).setAuthDescriptor(ad).build();
-            //  cache = new MemcachedClient(new InetSocketAddress(HEROKU_MEMCACHED_HOST_NAME, HEROKU_MEMCACHED_PORT));
-            cache = new MemcachedClient(cf, Collections.singletonList(new InetSocketAddress(HEROKU_MEMCACHED_HOST_NAME, HEROKU_MEMCACHED_PORT)));
-        }
-    //    */
-        /*
-        try {
-            ConnectionFactory c;
-            // allow auth to be disabled for local development
-            if (System.getenv("MEMCACHE_NOAUTH") == null) {
-                System.out.println("Using authentication with memcache");
-                AuthDescriptor ad = new AuthDescriptor(
-                        new String[] { "PLAIN" },
-                        new PlainCallbackHandler(System.getenv(MEMCACHED_USERNAME),
-                                System.getenv(MEMCACHED_PASSWORD)));
-                c = new ConnectionFactoryBuilder().setProtocol(
-                        ConnectionFactoryBuilder.Protocol.BINARY)
-                        .setAuthDescriptor(ad).build();
+            if (System.getProperty(USER_DIR).equals("/app")) {
+                AuthDescriptor ad = new AuthDescriptor(new String[]{"PLAIN"},
+                        new PlainCallbackHandler(MEMCACHED_USERNAME, MEMCACHED_PASSWORD));
+                ConnectionFactoryBuilder factoryBuilder = new ConnectionFactoryBuilder();
+                ConnectionFactory cf = factoryBuilder.setProtocol(ConnectionFactoryBuilder.Protocol.BINARY)
+                                                     .setAuthDescriptor(ad)
+                                                     .build();
+                cache = new MemcachedClient(cf,
+                            Collections.singletonList(new InetSocketAddress(HEROKU_MEMCACHED_HOST_NAME,
+                                                                            HEROKU_MEMCACHED_PORT)));
             } else {
-                System.out.println("Not using authentication with memcache");
-                c = new ConnectionFactoryBuilder().setProtocol(
-                        ConnectionFactoryBuilder.Protocol.BINARY).build();
+                cache = new MemcachedClient(new InetSocketAddress(MEMCACHED_HOST_NAME, MEMCACHED_PORT));
             }
-            cache = new MemcachedClient(c,
-                    AddrUtil.getAddresses(MEMCACHED_HOST_NAME));
-        } catch (Exception ex) {
-            System.err.println(
-                    "Couldn't create a connection, bailing out:\nIOException "
-                            + ex.getMessage());
+
         }
-        */
         return cache;
     }
 

@@ -112,7 +112,7 @@ public class SearchResult extends HttpServlet {
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("Result for " + query);
-            response.getWriter().write("\n: Hello World!");
+            response.getWriter().write(": No result found!");
         } else {
             response.setContentType("text/html");
    //         response.setContentType("application/json");
@@ -122,8 +122,7 @@ public class SearchResult extends HttpServlet {
                 out.write("\n");
                 out.println(" ");
             }
-            out.println("Result for " + query+": ");
-            out.println(System.getProperty(USER_DIR));
+            out.println("Result for " + query+": <br>");
             for (int i = 0; i < 22; i++) {
                 out.write("******");
             }
