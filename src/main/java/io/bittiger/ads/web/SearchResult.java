@@ -122,7 +122,7 @@ public class SearchResult extends HttpServlet {
                 out.write("\n");
                 out.println(" ");
             }
-            out.println("Result for " + query+": <br>");
+            out.println("Result for " + query + ":");
             for (int i = 0; i < 22; i++) {
                 out.write("******");
             }
