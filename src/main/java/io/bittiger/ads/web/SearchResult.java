@@ -123,7 +123,7 @@ public class SearchResult extends HttpServlet {
                 out.println(" ");
             }
             out.println("Result for " + query+": ");
-            out.println(" Hello World ! ");
+            out.println(System.getProperty(USER_DIR));
             for (int i = 0; i < 22; i++) {
                 out.write("******");
             }
