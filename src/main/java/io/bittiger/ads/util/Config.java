@@ -7,6 +7,10 @@ public class Config {
 
     public static final int MEMCACHED_PORT = 11211;
 
+    public static final String HEROKU_MEMCACHED_HOST_NAME = "pub-memcache-10087.us-east-1-2.3.ec2.garantiadata.com";
+
+    public static final int HEROKU_MEMCACHED_PORT = 10087;
+
     public static final int MEMCACHED_EXPIRATION_TIME = 3600;
 
     // MongoDB setting
@@ -14,6 +18,8 @@ public class Config {
     public static final String MONGODB_HOST_NAME = "localhost";
 
     public static final int MONGODB_PORT = 27017;
+
+    public static final String HEROKU_MONGODB_HOST_NAME = "ds023495.mlab.com:23495/heroku_tnl9xsxn";
 
     public static final String ADS_DB = "adsDB";
 

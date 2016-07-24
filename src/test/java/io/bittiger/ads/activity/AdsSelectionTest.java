@@ -1,5 +1,6 @@
 package io.bittiger.ads.activity;
 
+import io.bittiger.ads.datastore.AdsDao;
 import io.bittiger.ads.datastore.AdsIndex;
 import io.bittiger.ads.util.Ad;
 import org.junit.Test;
@@ -21,6 +22,10 @@ public class AdsSelectionTest {
         double expectedRelevantScore1 = 0.333;
         double expectedRelevantScore2 = 1;
         double expectedRelevantScore3 = 0.666;
+
+        AdsDao.getInstance().setAdToMongo(ad1);
+        AdsDao.getInstance().setAdToMongo(ad2);
+        AdsDao.getInstance().setAdToMongo(ad3);
 
         AdsIndex.getInstance().setAdToCache(ad1);
         AdsIndex.getInstance().setAdToCache(ad2);

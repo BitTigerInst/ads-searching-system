@@ -47,7 +47,7 @@ public class AdsDaoTest {
     @Test
     public void testCampaign() {
         long expectedCampaignId = 66L;
-        double expectedBudget = 10000;
+        double expectedBudget = 599126.5425;//10000;
 
         Campaign campaign = new Campaign();
         campaign.setCampaignId(expectedCampaignId);
