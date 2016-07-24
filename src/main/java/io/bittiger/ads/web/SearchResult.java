@@ -50,7 +50,7 @@ public class SearchResult extends HttpServlet {
         JSONObject jObj = new JSONObject(sb.toString());
         String query = jObj.getString("query");
 
-
+        /*
         String[] keywords = QueryUnderstanding.getInstance().parseQuery(query);
         for (String k: keywords) {
             System.out.println("keywords:"+ k);
@@ -108,7 +108,28 @@ public class SearchResult extends HttpServlet {
             sidebarAds = AdsCampaignManager.getInstance().applyBudget(dedupedSidebarAds);
         }
         System.out.println("sidebarAds~~~~~~~~"+sidebarAds);
-        if (mainlineAds == null && sidebarAds == null) {
+        */
+        String[] keywords = QueryUnderstanding.getInstance().parseQuery(query);
+
+        List<Ad> matchedAds = AdsSelection.getInstance().getMatchedAds(keywords);
+
+        List<Ad> filteredAds = AdsFilter.getInstance().filterAds(matchedAds);
+
+        List<Ad> rankedAds = AdsRanking.getInstance().rankAds(filteredAds);
+
+        List<Ad> selectedSortedAds = TopKAds.getInstance().selectTopKAds(rankedAds);
+
+        List<Ad> pricedAds = AdsPricing.getInstance().processPricing(selectedSortedAds);
+
+        List<Ad> dedupedAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(pricedAds);
+
+        List<Ad> appliedBudgetAds = AdsCampaignManager.getInstance().applyBudget(dedupedAds);
+
+        List<Ad> mainlineAds = AdsAllocation.getInstance().allocateAds(appliedBudgetAds, AllocationType.MAINLINE.name());
+
+        List<Ad> sidebarAds = AdsAllocation.getInstance().allocateAds(appliedBudgetAds, AllocationType.SIDEBAR.name());
+
+        if ((mainlineAds == null || mainlineAds.isEmpty()) && (sidebarAds == null || sidebarAds.isEmpty())) {
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("Result for " + query);
