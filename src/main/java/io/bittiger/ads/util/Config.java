@@ -13,15 +13,23 @@ public class Config {
 
     public static final int MEMCACHED_EXPIRATION_TIME = 3600;
 
+    public static final String MEMCACHED_USERNAME = "memcached-app53837788";
+
+    public static final String MEMCACHED_PASSWORD = "lQyVpS6J7e7jio2e";
+
     // MongoDB setting
 
     public static final String MONGODB_HOST_NAME = "localhost";
 
     public static final int MONGODB_PORT = 27017;
 
-    public static final String HEROKU_MONGODB_HOST_NAME = "ds023495.mlab.com:23495/heroku_tnl9xsxn";
+    public static final String HEROKU_MONGODB_HOST_NAME = "mongodb://admin:admin@ds023495.mlab.com";
+            //:23495/heroku_tnl9xsxn";
 
-    public static final String ADS_DB = "adsDB";
+    public static  final int HEROKU_MONGODB_PORT = 23495;
+
+    public static final String ADS_DB = "heroku_tnl9xsxn";
+            //"adsDB";
 
     public static final String ADS_COLLECTION = "adsCollection";
 

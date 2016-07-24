@@ -1,17 +1,13 @@
 package io.bittiger.ads.datastore;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.WriteResult;
+import com.mongodb.*;
+import com.mongodb.client.MongoDatabase;
 import io.bittiger.ads.util.Ad;
 import io.bittiger.ads.util.Campaign;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +15,8 @@ import static io.bittiger.ads.util.Config.*;
 
 public class AdsDao {
     private static AdsDao instance = null;
-    private static MongoClient mongo = null;
+    private static MongoClient mongoClient = null;
+    private static MongoClientURI mongoClientURI = null;
 
     protected AdsDao() {
     }
@@ -32,10 +29,16 @@ public class AdsDao {
     }
 
     private MongoClient getMongo() throws IOException {
-        if (mongo == null) {
-            mongo = new MongoClient(HEROKU_MONGODB_HOST_NAME);
+        if (mongoClientURI == null) {
+         //   mongo = new MongoClient(HEROKU_MONGODB_HOST_NAME);
+            mongoClientURI = new MongoClientURI(HEROKU_MONGODB_HOST_NAME+":"+HEROKU_MONGODB_PORT+"/"+ADS_DB);
+            System.out.println(mongoClientURI.toString());
+         //   mongoClientURI.getPassword();
+        //    MongoCredential credential = MongoCredential.createCredential(mongoClientURI.getUsername(), mongoClientURI.getDatabase(), mongoClientURI.getPassword());
+          //  mongoClient = new MongoClient(new ServerAddress(), Arrays.asList(credential));
+            mongoClient = new MongoClient(mongoClientURI);
         }
-        return mongo;
+        return mongoClient;
     }
 
     private DBCollection getAdsCollection() {
@@ -65,7 +68,7 @@ public class AdsDao {
     }
 
     public void shutdown() {
-        mongo.close();
+        mongoClient.close();
     }
 
 
