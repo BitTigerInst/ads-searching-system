@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.bittiger.ads.util.Config.*;
@@ -92,7 +93,7 @@ public class AdsEngine {
         return result;
     }
 
-    public void selectAds(String query) {
+    public List<Ad> selectAds(String query) {
 
         String[] keywords = QueryUnderstanding.getInstance().parseQuery(query);
 
@@ -110,19 +111,28 @@ public class AdsEngine {
 
         List<Ad> appliedBudgetAds = AdsCampaignManager.getInstance().applyBudget(dedupedAds);
 
-        List<Ad> mainlineAds = AdsAllocation.getInstance().allocateAds(appliedBudgetAds, AllocationType.MAINLINE.name());
+        AdsAllocation.getInstance().allocateAds(appliedBudgetAds);
 
-        List<Ad> sidebarAds = AdsAllocation.getInstance().allocateAds(appliedBudgetAds, AllocationType.SIDEBAR.name());
+        return appliedBudgetAds;
+    }
 
-
-        for (Ad mainlineAd : mainlineAds) {
-            System.out.println(mainlineAd.getAdId());
+    public List<Ad> getMainlineAds(List<Ad> ads) {
+        List<Ad> mainlineAds = new ArrayList<Ad>();
+        for (Ad ad : ads) {
+            if (ad.getAllocationType().equals(AllocationType.MAINLINE)) {
+                mainlineAds.add(ad);
+            }
         }
+        return mainlineAds;
+    }
 
-        System.out.println("===============");
-
-        for (Ad sidebar : sidebarAds) {
-            System.out.println(sidebar.getAdId());
+    public List<Ad> getSidebarAds(List<Ad> ads) {
+        List<Ad> sidebarAds = new ArrayList<Ad>();
+        for (Ad ad : ads) {
+            if (ad.getAllocationType().equals(AllocationType.SIDEBAR)) {
+                sidebarAds.add(ad);
+            }
         }
+        return sidebarAds;
     }
 }

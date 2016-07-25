@@ -11,9 +11,6 @@ import org.apache.catalina.webresources.StandardRoot;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-/**
- * Created by sleephu2 on 7/21/16.
- */
 public class Main {
 
     public static void main(String[] args) throws Exception {

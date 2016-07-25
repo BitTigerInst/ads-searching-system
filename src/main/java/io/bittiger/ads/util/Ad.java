@@ -12,6 +12,7 @@ public class Ad implements Serializable {
     private double qualityScore;
     private double rankScore;
     private double costPerClick;
+    private AllocationType allocationType;
 
     public Ad() {
     }
@@ -86,6 +87,14 @@ public class Ad implements Serializable {
 
     public void setCostPerClick(double costPerClick) {
         this.costPerClick = costPerClick;
+    }
+
+    public AllocationType getAllocationType() {
+        return allocationType;
+    }
+
+    public void setAllocationType(AllocationType allocationType) {
+        this.allocationType = allocationType;
     }
 
     @Override
