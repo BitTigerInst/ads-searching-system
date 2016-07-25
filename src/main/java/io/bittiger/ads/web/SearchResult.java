@@ -26,7 +26,7 @@ public class SearchResult extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private AdsEngine adsEngine = new AdsEngine();
 
-    /*load data into MongoDB*/
+    // load data into MongoDB and Memcached
     public void init() throws ServletException {
         try {
             adsEngine.init();
@@ -42,72 +42,12 @@ public class SearchResult extends HttpServlet {
         System.out.println("inside do POST");
         StringBuilder sb = new StringBuilder();
         BufferedReader br = request.getReader();
-        String str = null;
+        String str;
         while ((str = br.readLine()) != null) {
             sb.append(str);
         }
         JSONObject jObj = new JSONObject(sb.toString());
         String query = jObj.getString("query");
-
-        /*
-        String[] keywords = QueryUnderstanding.getInstance().parseQuery(query);
-        for (String k: keywords) {
-            System.out.println("keywords:"+ k);
-        }
-        List<Ad> matchedAds = AdsSelection.getInstance().getMatchedAds(keywords);
-        System.out.println("matched Ads!~~~~~~~~~"+matchedAds);
-        List<Ad> filteredAds = null;
-        if (matchedAds != null && matchedAds.size() != 0) {
-            filteredAds = AdsFilter.getInstance().filterAds(matchedAds);
-        }
-        System.out.println("filtered Ads!~~~~~~~~~"+filteredAds);
-        List<Ad> rankedAds = null;
-        if (filteredAds != null && filteredAds.size() != 0) {
-            rankedAds = AdsRanking.getInstance().rankAds(filteredAds);
-        }
-        System.out.println("ranked Ads!~~~~~~~~~"+rankedAds);
-        List<Ad> selectedSortedAds = null;
-        if (rankedAds != null && rankedAds.size() != 0) {
-            selectedSortedAds = TopKAds.getInstance().selectTopKAds(rankedAds, 5);
-        }
-        System.out.println("selected Ads!~~~~~~~~~"+selectedSortedAds);
-        List<Ad> pricedAds = null;
-        if (selectedSortedAds != null && selectedSortedAds.size() != 0) {
-            pricedAds = AdsPricing.getInstance().processPricing(selectedSortedAds);
-        }
-        System.out.println("pricing Ads!~~~~~~~~~"+pricedAds);
-        List<Ad> mainlineAdsCandidates = null;
-        if (pricedAds != null) {
-            mainlineAdsCandidates = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.MAINLINE.name());
-        }
-        System.out.println("mainline candidates!~~~~~~~"+mainlineAdsCandidates);
-        List<Ad> dedupedMainlineAds = null;
-        if (mainlineAdsCandidates != null) {
-            dedupedMainlineAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(mainlineAdsCandidates);
-        }
-        System.out.println("mainline deduped Ads~~~~~~~~"+dedupedMainlineAds);
-        List<Ad> mainlineAds = null;
-        if (dedupedMainlineAds != null) {
-         mainlineAds = AdsCampaignManager.getInstance().applyBudget(dedupedMainlineAds);
-        }
-        System.out.println("mainlineAds~~~~~~~~~~~~~"+mainlineAds);
-        System.out.println("***********************************************");
-        List<Ad> sidebarAdsCandidates = null;
-        if (pricedAds != null) {
-            sidebarAdsCandidates = AdsAllocation.getInstance().allocateAds(pricedAds, AllocationType.SIDEBAR.name());
-        }
-        System.out.println("sidebar candidates~~~~~~"+sidebarAdsCandidates);
-        List<Ad> dedupedSidebarAds = null;
-        if (sidebarAdsCandidates != null) {
-            dedupedSidebarAds = AdsCampaignManager.getInstance().dedupeAdsByCampaignId(sidebarAdsCandidates);
-        }
-        System.out.println("sidebar deduped Ads~~~~~~~~~"+dedupedSidebarAds);
-        List<Ad> sidebarAds = null;
-        if (dedupedSidebarAds != null) {
-            sidebarAds = AdsCampaignManager.getInstance().applyBudget(dedupedSidebarAds);
-        }
-        System.out.println("sidebarAds~~~~~~~~"+sidebarAds);
-        */
 
         List<Ad> ads = adsEngine.selectAds(query);
         List<Ad> mainlineAds = adsEngine.getMainlineAds(ads);
