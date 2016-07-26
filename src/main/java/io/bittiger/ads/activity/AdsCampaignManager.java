@@ -8,16 +8,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static io.bittiger.ads.util.Config.MIN_RESERVE_PRICE;
 
 public class AdsCampaignManager {
     private static AdsCampaignManager instance = null;
-    private final ReadWriteLock lock = new ReentrantReadWriteLock();
-    private final Lock writeLock = lock.writeLock();
 
     protected AdsCampaignManager() {
     }
@@ -46,14 +41,6 @@ public class AdsCampaignManager {
 
         for (int i = 0; i < candidateAds.size() - 1; i++) {
             Ad ad = candidateAds.get(i);
-            applyBudgetToAd(ads, ad);
-        }
-        return ads;
-    }
-
-    private void applyBudgetToAd(List<Ad> ads, Ad ad) {
-        writeLock.lock();
-        try {
             long campaignId = ad.getCampaignId();
             Campaign campaign = AdsIndex.getInstance().getCampaign(campaignId);
             double budget = campaign.getBudget();
@@ -64,8 +51,7 @@ public class AdsCampaignManager {
                 AdsIndex.getInstance().setCampaign(campaign);
                 ads.add(ad);
             }
-        } finally {
-            writeLock.unlock();
         }
+        return ads;
     }
 }

@@ -8,11 +8,16 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static io.bittiger.ads.util.Config.*;
 
 public class AdsIndex {
     private static AdsIndex instance = null;
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Lock writeLock = lock.writeLock();
 
     protected AdsIndex() {
     }
@@ -153,6 +158,11 @@ public class AdsIndex {
     }
 
     public boolean setCampaign(Campaign campaign) {
-        return setCampaignToCache(campaign) && AdsDao.getInstance().setCampaign(campaign);
+        writeLock.lock();
+        try {
+            return setCampaignToCache(campaign) && AdsDao.getInstance().setCampaign(campaign);
+        } finally {
+            writeLock.unlock();
+        }
     }
 }
