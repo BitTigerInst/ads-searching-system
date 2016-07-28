@@ -18,6 +18,7 @@ public class AdsIndex {
     private static AdsIndex instance = null;
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final Lock writeLock = lock.writeLock();
+    private final Lock readLock = lock.readLock();
 
     protected AdsIndex() {
     }
@@ -148,13 +149,17 @@ public class AdsIndex {
     }
 
     public Campaign getCampaign(long campaignId) {
-        Campaign campaign = getCampaignFromCache(campaignId);
-
-        if (campaign == null) {
-            campaign = AdsDao.getInstance().getCampaign(campaignId);
-            setCampaignToCache(campaign);
+        readLock.lock();
+        try {
+            Campaign campaign = getCampaignFromCache(campaignId);
+            if (campaign == null) {
+                campaign = AdsDao.getInstance().getCampaign(campaignId);
+                setCampaignToCache(campaign);
+            }
+            return campaign;
+        } finally {
+            readLock.unlock();
         }
-        return campaign;
     }
 
     public boolean setCampaign(Campaign campaign) {
