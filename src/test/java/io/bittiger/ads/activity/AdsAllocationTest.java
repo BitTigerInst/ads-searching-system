@@ -1,6 +1,7 @@
 package io.bittiger.ads.activity;
 
 import io.bittiger.ads.util.Ad;
+import io.bittiger.ads.util.AllocationType;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -31,15 +32,26 @@ public class AdsAllocationTest {
         ads.add(initAd(13L, 500));
         ads.add(initAd(14L, 400));
         ads.add(initAd(15L, 300));
-        ads.add(initAd(16L, 200));
 
-        List<Ad> res1 = AdsAllocation.getInstance().allocateAds(ads, "MAINLINE");
+        AdsAllocation.getInstance().allocateAds(ads);
+
+        assertNotNull(ads);
+        assertEquals(15, ads.size());
+
+        List<Ad> res1 = new ArrayList<Ad>();
+        List<Ad> res2 = new ArrayList<Ad>();
+        for (Ad ad : ads) {
+            if (ad.getAllocationType().equals(AllocationType.MAINLINE)) {
+                res1.add(ad);
+            } else if (ad.getAllocationType().equals(AllocationType.SIDEBAR)) {
+                res2.add(ad);
+            }
+        }
 
         assertNotNull(res1);
         assertEquals(11, res1.size());
         assertTrue(res1.get(5).getCostPerClick() >= 1200);
 
-        List<Ad> res2 = AdsAllocation.getInstance().allocateAds(ads, "SIDEBAR");
         assertNotNull(res2);
         assertEquals(4, res2.size());
         assertTrue(res1.get(3).getCostPerClick() >= 500);

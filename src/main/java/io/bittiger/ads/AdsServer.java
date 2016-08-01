@@ -3,8 +3,10 @@ package io.bittiger.ads;
 import io.bittiger.ads.activity.AdsEngine;
 import io.bittiger.ads.datastore.AdsDao;
 import io.bittiger.ads.datastore.AdsIndex;
+import io.bittiger.ads.util.Ad;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdsServer {
@@ -23,7 +25,17 @@ public class AdsServer {
                 System.out.println("Please enter your query (Enter Q to exit):");
                 query = scan.nextLine();
 
-                adsEngine.selectAds(query);
+                List<Ad> ads = adsEngine.selectAds(query);
+
+                for (Ad ad : adsEngine.getMainlineAds(ads)) {
+                    System.out.println(ad.getAdId());
+                }
+
+                System.out.println("===============");
+
+                for (Ad ad : adsEngine.getSidebarAds(ads)) {
+                    System.out.println(ad.getAdId());
+                }
 
             } while (!query.equals("Q"));
 
