@@ -50,8 +50,8 @@
     <nav>
       <ul class="nav nav-pills pull-right">
         <li role="presentation" class="active"><a href="#">Home</a></li>
-        <li role="presentation"><a href="#">About</a></li>
-        <li role="presentation"><a href="#">Contact</a></li>
+        <li role="presentation"><a href="about.jsp">About</a></li>
+        <li role="presentation"><a href="contact.jsp">Contact</a></li>
       </ul>
     </nav>
     <h3 class="text-muted" align="left">Ads Searching System</h3>
@@ -75,7 +75,7 @@
   <div class="alert alert-warning" role="alert" ng-if="message">{{message}}</div>
 
   <footer class="footer">
-    <p>&copy; 2016 ads-searching, Inc.</p>
+    <p>@2016 Monkey-Year-Horse-Month</p>
   </footer>
 
 </div> <!-- /container -->
