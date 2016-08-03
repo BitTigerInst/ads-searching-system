@@ -14,11 +14,17 @@ import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static io.bittiger.ads.util.Config.*;
 
 public class AdsIndex {
     private static AdsIndex instance = null;
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Lock writeLock = lock.writeLock();
+    private final Lock readLock = lock.readLock();
 
     protected AdsIndex() {
     }
@@ -162,16 +168,25 @@ public class AdsIndex {
     }
 
     public Campaign getCampaign(long campaignId) {
-        Campaign campaign = getCampaignFromCache(campaignId);
-
-        if (campaign == null) {
-            campaign = AdsDao.getInstance().getCampaign(campaignId);
-            setCampaignToCache(campaign);
+        readLock.lock();
+        try {
+            Campaign campaign = getCampaignFromCache(campaignId);
+            if (campaign == null) {
+                campaign = AdsDao.getInstance().getCampaign(campaignId);
+                setCampaignToCache(campaign);
+            }
+            return campaign;
+        } finally {
+            readLock.unlock();
         }
-        return campaign;
     }
 
     public boolean setCampaign(Campaign campaign) {
-        return setCampaignToCache(campaign) && AdsDao.getInstance().setCampaign(campaign);
+        writeLock.lock();
+        try {
+            return setCampaignToCache(campaign) && AdsDao.getInstance().setCampaign(campaign);
+        } finally {
+            writeLock.unlock();
+        }
     }
 }
