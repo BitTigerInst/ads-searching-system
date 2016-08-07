@@ -1,0 +1,135 @@
+[
+ {
+   "adId": 1231,
+   "campaignId": 66,
+   "keywords": "nike kobe basketball shoe",
+   "bid": 1200,
+   "pclick": 1.2
+ },
+ {
+   "adId": 1232,
+   "campaignId": 66,
+   "keywords": "nike running shoe",
+   "bid": 1300,
+   "pclick": 0.6
+ },
+ {
+   "adId": 1233,
+   "campaignId": 66,
+   "keywords": "nike soccer shoe",
+   "bid": 1400,
+   "pclick": 1.2
+ },
+ {
+   "adId": 1234,
+   "campaignId": 67,
+   "keywords": "adidas shoe",
+   "bid": 1000,
+   "pclick": 0.88
+ },
+ {
+   "adId": 1235,
+   "campaignId": 67,
+   "keywords": "adidas basketball",
+   "bid": 900,
+   "pclick": 0.7
+ },
+ {
+   "adId": 1236,
+   "campaignId": 67,
+   "keywords": "adidas sports",
+   "bid": 400,
+   "pclick": 0.71
+ },
+ {
+   "adId": 1237,
+   "campaignId": 68,
+   "keywords": "sports shoe clothes",
+   "bid": 800,
+   "pclick": 0.4
+ },
+ {
+   "adId": 1238,
+   "campaignId": 68,
+   "keywords": "nike adidas sports",
+   "bid": 500,
+   "pclick": 0.51
+ },
+ {
+   "adId": 1239,
+   "campaignId": 69,
+   "keywords": "clothes shoe",
+   "bid": 550,
+   "pclick": 1.1
+ },
+ {
+   "adId": 1240,
+   "campaignId": 70,
+   "keywords": "food burger",
+   "bid": 250,
+   "pclick": 0.7
+ },
+ {
+   "adId": 1241,
+   "campaignId": 75,
+   "keywords": "restaurant american food",
+   "bid": 500,
+   "pclick": 0.6
+ },
+ {
+   "adId": 1242,
+   "campaignId": 71,
+   "keywords": "restaurant chinese food \"",
+   "bid": 500,
+   "pclick": 0.65
+ },
+ {
+   "adId": 1243,
+   "campaignId": 76,
+   "keywords": "cup coffee ",
+   "bid": 1500,
+   "pclick": 0.75
+ },
+ {
+   "adId": 1244,
+   "campaignId": 72,
+   "keywords": "kobe sport t-shirt",
+   "bid": 1200,
+   "pclick": 0.89
+ },
+ {
+   "adId": 1245,
+   "campaignId": 74,
+   "keywords": "eat san francisco",
+   "bid": 600,
+   "pclick": 0.3
+ },
+ {
+   "adId": 1246,
+   "campaignId": 73,
+   "keywords": "starbucks coffee cup",
+   "bid": 700,
+   "pclick": 0.92
+ },
+ {
+   "adId": 1247,
+   "campaignId": 72,
+   "keywords": "gym san francisco",
+   "bid": 600,
+   "pclick": 0.76
+ },
+ {
+   "adId": 1248,
+   "campaignId": 70,
+   "keywords": "american food",
+   "bid": 300,
+   "pclick": 0.85
+ },
+ {
+   "adId": 1249,
+   "campaignId": 74,
+   "keywords": "chinese food",
+   "bid": 200,
+   "pclick": 0.4
+ }
+]
