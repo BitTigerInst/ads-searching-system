@@ -35,8 +35,8 @@ __Step2. Get source code from Github and run ads-searching-system server__
 
 ### Deploy on Heroku
 1. Create an account on Heroku
-2. Login to Heroku, create an app on Heroku
-3. Add Memcached Cloud, mLab Mongodb as add-ons
+2. Login to Heroku, create an app on Heroku. Then you will get a random name as the first part of the url(i.e. https://random-name.herokuapp.com/). You can also specify a name for your project. So in our case the project url is https://ads-searching-system.herokuapp.com/.
+3. Add Memcached Cloud, mLab Mongodb as add-ons. These add-ons need account verification. So you need to set up a valid payment information. As for our project mLab MongoDB is free of charge if storage is under 496MB, and Memcached Cloud is free as well if memory size is under 30MB. More to read [here](https://elements.heroku.com/addons/memcachedcloud) and [here](https://elements.heroku.com/addons/mongolab)
 4. Link your Github's targeted branch(in this case it's master branch) to Heroku so that latest changes can be shown on Heroku
 5. Update relevant settings for remote Memcached and MongoDB in the project, and push the latest changes to targeted branch
 6. Type the url(https://ads-searching-system.herokuapp.com/) to open the project on your browser
