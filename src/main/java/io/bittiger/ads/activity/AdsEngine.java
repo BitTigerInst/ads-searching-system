@@ -27,7 +27,6 @@ public class AdsEngine {
         for example:
         "/Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION
         */
-   //     String jsonData = readFile( "/Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + ADS_LOCATION);
         System.out.println(System.getProperty(USER_DIR));
         String jsonData = readFile(System.getProperty(USER_DIR) + ADS_LOCATION);
 
@@ -49,7 +48,6 @@ public class AdsEngine {
     }
 
     private boolean loadCampaignsFile() {
-    //    String jsonData = readFile( "/Users/sleephu2/Dropbox/GitRepository/ads-searching-system" + CAMPAIGNS_LOCATION);
 
         String jsonData = readFile(System.getProperty(USER_DIR) + CAMPAIGNS_LOCATION);
 
